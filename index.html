@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Chandan Chowdary - Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+    body {
+        font-family: 'Roboto', sans-serif;
+    }
+
+    section, main {
+        transition: opacity 0.5s ease-in-out, transform 0.3s ease;
+    }
+
+    .fade-in {
+        opacity: 1 !important;
+        transform: translateY(0px);
+    }
+
+    .hidden {
+        opacity: 0;
+        transform: translateY(20px);
+        pointer-events: none;
+        position: absolute;
+    }
+</style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+  
+<!-- Scroll to Top Button -->
+<button onclick="window.scrollTo({ top: 0, behavior: 'smooth' });"
+    class="fixed bottom-5 right-5 bg-gray-800 text-white px-4 py-2 rounded-full shadow-md hover:bg-gray-700 transition-opacity duration-300 z-50">
+    ↑ Top
+</button>
+
+
+<!-- Updated Navigation -->
+<nav class="space-x-4 mt-2 md:mt-0">
+    <a class="nav-link text-gray-600 hover:text-blue-600" href="#" onclick="showSection('home')">Home</a>
+    <a class="nav-link text-gray-600 hover:text-blue-600" href="#" onclick="showSection('education')">Education</a>
+    <a class="nav-link text-gray-600 hover:text-blue-600" href="#" onclick="showSection('skills-certifications')">Skills & Projects</a>
+    <a class="nav-link text-gray-600 hover:text-blue-600" href="#" onclick="showSection('experience-internships')">Experience/Internships </a>
+     <a class="nav-link text-gray-600 hover:text-blue-600" href="#" onclick="showSection('contact')">Contact</a>
+</nav>
+
+
+<!-- Home Section -->
+<main id="home" class="flex flex-col items-center mt-16 text-center px-4">
+<!--     <div class="rounded-full overflow-hidden w-48 h-48">
+      <img src="https://i.ibb.co/chZhDNZw/profile-pic.jpg" alt="Chandan Chowdary's Profile Picture" class="w-full h-full object-cover" />
+    </div> -->
+    <h1 class="text-5xl font-bold mt-8">Hello, I'm Chandan Chowdary</h1>
+    <p class="mt-4 max-w-xl text-gray-600">
+        A hard-working and tech-enthusiastic recent graduate with a Master’s in Computer Applications. I aim to contribute to innovative projects and build impactful solutions with programming and analytical skills.
+    </p>
+    <div class="flex flex-wrap justify-center gap-4 mt-8">
+        <a class="bg-yellow-500 text-white font-bold py-2 px-4 rounded-full" href="#" onclick="showSection('education')">Education</a>
+        <a class="bg-yellow-500 text-white font-bold py-2 px-4 rounded-full" href="#" onclick="showSection('skills-certifications')">Skills & Projects</a>
+        <a class="bg-yellow-500 text-white font-bold py-2 px-4 rounded-full" href="#" onclick="showSection('experience-internships')">Experience/Internships</a>
+        <a class="bg-teal-500 text-white font-bold py-2 px-4 rounded-full" href="#" onclick="showSection('contact')">Contact</a>
+        <a href="Chandan_Chowdary_Resume.pdf" download class="bg-blue-600 text-white font-bold py-2 px-4 rounded-full hover:bg-blue-700">Download Resume</a>
+    </div>
+</main>
+
+
+
+    <!-- Education Section -->
+    <section id="education" class="hidden mt-16 p-8 bg-white rounded-lg shadow-md max-w-4xl mx-auto">
+        <h2 class="text-3xl font-bold mb-6">Education</h2>
+        <div class="grid gap-6 md:grid-cols-2">
+            <div class="bg-gray-50 p-4 rounded shadow">
+                <h3 class="text-xl font-semibold">MCA</h3>
+                <p>Chaitanya Bharathi Institute of Technology</p>
+                <p class="text-sm text-gray-500">11/2022 – 06/2024</p>
+                <p><strong>CGPA:</strong> 8.57</p>
+            </div>
+            <div class="bg-gray-50 p-4 rounded shadow">
+                <h3 class="text-xl font-semibold">BSc in Computers</h3>
+                <p>Gayatri Vidya Parishad, Vishakhapatnam</p>
+                <p class="text-sm text-gray-500">07/2018 – 08/2021</p>
+                <p><strong>CGPA:</strong> 8.03</p>
+            </div>
+            <div class="bg-gray-50 p-4 rounded shadow">
+                <h3 class="text-xl font-semibold">Intermediate (MPC)</h3>
+                <p>Swarna Bharathi Junior College</p>
+                <p class="text-sm text-gray-500">2016 – 2018</p>
+                <p><strong>Marks:</strong> 926</p>
+            </div>
+            <div class="bg-gray-50 p-4 rounded shadow">
+                <h3 class="text-xl font-semibold">SSC</h3>
+                <p>Government Boys High School</p>
+                <p class="text-sm text-gray-500">2015 – 2016</p>
+                <p><strong>CGPA:</strong> 9.0</p>
+            </div>
+        </div>
+      
+<!-- Interests & Languages Stacked Vertically in Boxes -->
+<div class="mt-10 space-y-8">
+
+    <!-- Interests & Hobbies Box -->
+    <div class="bg-gray-50 p-6 rounded-lg shadow">
+        <h3 class="text-2xl font-bold mb-4">Interests & Hobbies</h3>
+        <ul class="list-disc list-inside space-y-2 text-gray-700">
+            <li>Reading Novels</li>
+            <li>Listening to Podcasts</li>
+            <li>Playing Sports</li>
+            <li>Exploring New Places</li>
+        </ul>
+    </div>
+
+    <!-- Languages Box -->
+    <div class="bg-gray-50 p-6 rounded-lg shadow">
+        <h3 class="text-2xl font-bold mb-4">Languages I Speak</h3>
+        <ul class="list-disc list-inside space-y-2 text-gray-700">
+            <li>English</li>
+            <li>Hindi</li>
+            <li>Telugu</li>
+            <li>Oriya</li>
+        </ul>
+    </div>
+    
+</div>
+
+
+</section>
+<!-- Skills, Certifications, and Projects Section -->
+<section id="skills-certifications" class="hidden mt-16 p-8 bg-white rounded-lg shadow-md max-w-4xl mx-auto space-y-10">
+    
+    <!-- Skills Box -->
+    <div class="bg-gray-50 p-6 rounded-lg shadow">
+        <h2 class="text-3xl font-bold mb-4">Skills</h2>
+        <ul class="list-disc list-inside space-y-2 text-gray-700">
+            <li><strong>Languages:</strong> Python, Core Java, C</li>
+            <li><strong>Tools:</strong> Postman, Pandas, NumPy, Streamlit, Flask, JIRA</li>
+            <li><strong>Database:</strong> SQL</li>
+            <li><strong>Soft Skills:</strong> Self-learning, Analytical thinking, Team collaboration</li>
+            <li><strong>Office:</strong> MS Word, Excel</li>
+        </ul>
+    </div>
+
+    <!-- Certifications Box -->
+    <div class="bg-gray-50 p-6 rounded-lg shadow">
+        <h2 class="text-3xl font-bold mb-4">Certifications</h2>
+        <ul class="list-disc list-inside space-y-2 text-gray-700">
+            <li><strong>Accenture Developer Virtual Experience Program:</strong> Completed simulated job environment, demonstrating practical development skills.</li>
+            <li><strong>Python Programming Certifications:</strong> Completed foundational courses from Coding Ninjas and HackerRank.</li>
+            <li><strong>Problem Solving – Silver Badge (CodeChef):</strong> Recognized for competitive programming and algorithmic problem-solving skills.</li>
+            <li><strong>SQL Certification – HackerRank:</strong> Validated proficiency in SQL queries, joins, and data manipulation.</li>
+        </ul>
+    </div>
+
+    <!-- Projects Box -->
+    <div class="bg-gray-50 p-6 rounded-lg shadow">
+        <h2 class="text-3xl font-bold mb-4">Projects</h2>
+        <div class="space-y-6">
+
+            <!-- Car Price Prediction -->
+            <div>
+                <h3 class="font-semibold text-xl">Car Price Prediction</h3>
+                <ul class="list-disc list-inside text-gray-700 mt-2">
+                     <li>Developed a machine learning model using Python with Linear Regression to predict the approximate price of used cars based on user-inputted features.</li>
+                        <li>Utilized Streamlit to create an interactive web-based interface for data input and price prediction.</li>
+                        <li>Improved prediction accuracy by implementing data preprocessing and model optimization techniques.</li>
+                </ul>
+            </div>
+
+            <!-- Fraud Detection in Insurance -->
+            <div>
+                <h3 class="font-semibold text-xl">Fraud Detection in Medical Insurance Claim System</h3>
+                <ul class="list-disc list-inside text-gray-700 mt-2">
+                     <li>Created a web-based application utilizing machine learning algorithms such as SVM and GridSearchCV to detect fraudulent insurance claims.</li>
+                        <li>Developed a responsive user interface with Flask, HTML, and CSS for real-time predictions.</li>
+                        <li>Achieved a 92% accuracy rate in identifying fraudulent claims, enhancing decision-making efficiency.</li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+  
+<section id="experience-internships" class="hidden mt-16 p-8 bg-white rounded-lg shadow-md max-w-4xl mx-auto">
+    <h2 class="text-3xl font-bold mb-6 text-center">Internships / Work Experience</h2>
+<div class="space-y-8">
+    <!-- OASYS Cybernetics Box -->
+    <div class="bg-gray-50 p-6 rounded-lg shadow">
+        <h3 class="text-2xl font-semibold mb-2">Software Engineer Trainee</h3>
+        <p class="text-lg font-medium text-gray-700">OASYS Cybernetics Pvt Ltd, Chennai</p>
+        <p class="text-sm text-gray-500 mb-4">Oct 2021 - Feb 2022</p>
+        <ul class="list-disc list-inside ml-4 text-gray-700 space-y-1">
+            <li>Preprocessed large datasets using Pandas and NumPy for ML models.</li>
+            <li>Reduced training time by optimizing datasets and removing irrelevant fields.</li>
+            <li>Worked hands-on with Python for data handling and preparation.</li>
+            <li>Built and evaluated ML models with Scikit-learn for data training/testing.</li>
+            <li>Collaborated with senior devs to integrate ML solutions into projects.</li>
+            <li>Actively contributed to coding and data management for efficiency.</li>
+        </ul>
+    </div>
+
+    <!-- Pantech Solutions Box -->
+    <div class="bg-gray-50 p-6 rounded-lg shadow">
+        <h3 class="text-2xl font-semibold mb-2">Summer Intern – Phish Catcher Project</h3>
+        <p class="text-lg font-medium text-gray-700">Pantech Solutions, Hyderabad</p>
+        <p class="text-sm text-gray-500 mb-4">Sep 2023 - Oct 2023</p>
+        <ul class="list-disc list-inside ml-4 text-gray-700 space-y-1">
+            <li>Built a phishing detection system using Flask + ML (SVM, XGBoost, Stacking Classifier).</li>
+            <li>Trained model on 10K+ phishing & legit URLs — achieved 90% accuracy.</li>
+            <li>Created client-side solution for instant phishing detection.</li>
+            <li>Designed intuitive UI with HTML, CSS for real-time results.</li>
+            <li>Improved user experience and minimized false positives.</li>
+        </ul>
+    </div>
+</div>
+
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="hidden mt-16 p-8 bg-white rounded-lg shadow-md max-w-2xl mx-auto">
+    <h2 class="text-3xl font-bold mb-4">Contact Me</h2>
+    <p class="text-gray-700">Feel free to connect with me via email, LinkedIn, Phone.</p>
+
+    <!-- Contact Info -->
+    <div class="mt-4 space-y-2 text-gray-700">
+        <p><strong>Phone:</strong> +91-8309443303</p>
+        <p><strong>Email:</strong> <a href="mailto:sahukarichandan2001@gmail.com" class="text-blue-500 underline">sahukarichandan2001@gmail.com</a></p>
+        <p><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/chandan-chowdary-b756ba234" target="_blank" class="text-blue-500 underline">linkedin.com/in/chandan-chowdary-b756ba234</a></p>
+    </div>
+
+
+
+
+    </section>
+
+<script>
+    function showSection(sectionId) {
+        // Hide all sections
+        document.querySelectorAll('main, section').forEach(section => {
+            section.classList.add('hidden');
+            section.classList.remove('fade-in');
+        });
+
+        // Remove active styles from all nav and buttons
+        document.querySelectorAll('.nav-link, .rounded-full').forEach(link => {
+            link.classList.remove('font-bold', 'ring-2', 'ring-offset-2', 'ring-blue-300');
+        });
+
+        // Show and animate the selected section
+        const section = document.getElementById(sectionId);
+        section.classList.remove('hidden');
+        setTimeout(() => section.classList.add('fade-in'), 10); // Delay for transition
+
+        // Highlight active nav link
+        const activeLink = Array.from(document.querySelectorAll('.nav-link')).find(link =>
+            link.getAttribute('onclick')?.includes(sectionId)
+        );
+        if (activeLink) {
+            activeLink.classList.add('font-bold', 'text-blue-600');
+        }
+
+        // Highlight active rounded button
+        const activeButton = Array.from(document.querySelectorAll('.rounded-full')).find(btn =>
+            btn.getAttribute('onclick')?.includes(sectionId)
+        );
+        if (activeButton) {
+            activeButton.classList.add('ring-2', 'ring-offset-2', 'ring-blue-300');
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        showSection('home');
+    });
+</script>
+
+</body>
+</html>
+

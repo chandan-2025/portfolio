@@ -181,32 +181,56 @@
 
 </section>
 
-<!-- Projects Section -->
 <section id="projects" class="hidden mt-16 p-8 bg-white rounded-lg shadow-md max-w-4xl mx-auto">
-    <h2 class="text-3xl font-bold mb-4">Technical Projects</h2>
-    <div class="space-y-6">
-        <div>
-            <h3 class="font-semibold text-xl">Car Price Prediction</h3>
-            <ul class="list-disc list-inside text-gray-700 mt-2">
-                <li>Developed a regression-based Streamlit app for real-time car price prediction.</li>
-                <li>Performed feature engineering and model evaluation using Python, Pandas, and Scikit-learn.</li>
-            </ul>
-        </div>
-        <div>
-            <h3 class="font-semibold text-xl">Fraud Detection in Medical Insurance</h3>
-            <ul class="list-disc list-inside text-gray-700 mt-2">
-                <li>Built a Flask app using SVM and GridSearchCV achieving 92% accuracy in detecting fraudulent claims.</li>
-                <li>Integrated a responsive frontend with a real-time prediction interface.</li>
-            </ul>
-        </div>
-        <div>
-            <h3 class="font-semibold text-xl">Phish Catcher</h3>
-            <ul class="list-disc list-inside text-gray-700 mt-2">
-                <li>Designed a phishing URL detection system using ensemble ML models (SVM, XGBoost) achieving 90% accuracy.</li>
-                <li>Deployed using Flask for client-side detection and live classification.</li>
-            </ul>
-        </div>
+  <h2 class="text-3xl font-bold mb-8 text-center">Technical Projects</h2>
+
+  <div class="space-y-10">
+
+    <!-- Project 1 -->
+    <div class="bg-gray-50 p-6 rounded-lg shadow hover:shadow-lg transition">
+      <h3 class="text-2xl font-semibold text-gray-900">Flask-Based Full-Stack Mechanic Shop Management System</h3>
+      <p class="mt-2 text-gray-700">
+        Developed a full-stack web application using Flask to manage repair shop appointments, customer data, and admin functionalities.
+      </p>
+      <p class="mt-2 text-sm text-gray-500"><strong>Tech Stack:</strong> Python, Flask, Flask-SQLAlchemy, Pandas, SQLite, HTML/CSS, Git</p>
+      <ul class="list-disc list-inside text-gray-700 mt-3 space-y-1">
+        <li><strong>Appointment Booking:</strong> Customers can book, reschedule, and cancel appointments for device repairs.</li>
+        <li><strong>Admin Dashboard:</strong> Admins can view, filter, and update appointment statuses and export data to Excel.</li>
+        <li><strong>Security:</strong> Integrated Flask-Login for user authentication, ensuring secure admin access.</li>
+        <li><strong>Excel Export:</strong> Enabled exporting all appointments to Excel using Pandas for business reporting.</li>
+        <li><strong>Appointment Limit:</strong> Implemented daily appointment limits based on business rules.</li>
+      </ul>
     </div>
+
+    <!-- Project 2 -->
+    <div class="bg-gray-50 p-6 rounded-lg shadow hover:shadow-lg transition">
+      <h3 class="text-2xl font-semibold text-gray-900">Phish Catcher</h3>
+      <p class="mt-2 text-gray-700">
+        Developed a Flask-based machine learning web app to detect phishing URLs and protect users from malicious websites.
+      </p>
+      <p class="mt-2 text-sm text-gray-500"><strong>Tech Stack:</strong> Python, Flask, Scikit-learn, XGBoost, Pandas, NumPy, HTML, CSS, Bootstrap</p>
+      <ul class="list-disc list-inside text-gray-700 mt-3 space-y-1">
+        <li>Implemented an ensemble model combining SVM and XGBoost, achieving <strong>90% accuracy</strong> on test data.</li>
+        <li>Extracted and analyzed URL features like domain length, special characters, and HTTPS usage to improve predictions.</li>
+        <li>Deployed the trained model using Flask for real-time phishing detection via a user-friendly web interface.</li>
+      </ul>
+    </div>
+
+    <!-- Project 3 -->
+    <div class="bg-gray-50 p-6 rounded-lg shadow hover:shadow-lg transition">
+      <h3 class="text-2xl font-semibold text-gray-900">Fraud Detection in Medical Insurance</h3>
+      <p class="mt-2 text-gray-700">
+        Designed and built a machine learning-powered Flask web app to detect fraudulent medical insurance claims with high accuracy.
+      </p>
+      <p class="mt-2 text-sm text-gray-500"><strong>Tech Stack:</strong> Python, Flask, Scikit-learn, Pandas, NumPy, HTML, CSS, Bootstrap</p>
+      <ul class="list-disc list-inside text-gray-700 mt-3 space-y-1">
+        <li><strong>ML Pipeline & Optimization:</strong> Built a full ML workflow with preprocessing, feature selection, and tuning using SVM with GridSearchCV, achieving <strong>92% accuracy</strong>.</li>
+        <li>Integrated the model into a Flask backend for real-time fraud detection via a user input web interface.</li>
+        <li>Used confusion matrix and accuracy metrics to evaluate and visualize model performance.</li>
+      </ul>
+    </div>
+
+  </div>
 </section>
 
 <!-- Experience Section -->
@@ -350,4 +374,5 @@
 
 </body>
 </html>
+
 

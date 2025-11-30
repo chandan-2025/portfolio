@@ -1,249 +1,189 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sahukari Chandan Chowdary - Portfolio</title>
+
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+
     <style>
-        body {
-            font-family: 'Roboto', sans-serif;
+        /* ======================================= */
+        /* === 🎨 CUSTOM COLOR DEFINITIONS START === */
+        /* ======================================= */
+        :root {
+            /* If you want to change the portfolio colors, only edit the hex codes below! */
+            --color-primary-accent: #393D64; /* Deep Indigo (Main Color: Headings, Buttons, Borders) */
+            --color-primary-hover: #2A2D4F;  /* Darker Indigo (Button Hover State) */
+            --color-highlight-text: #F0A500; /* Muted Gold/Deep Yellow (Used for icons/visual accents) */
+            --color-dark-neutral: #333333;   /* General Text Color */
+            --color-bg-section: #F8F8F8;    /* Light Gray Background for cards/sections */
         }
-        section, main {
-            transition: opacity 0.5s ease-in-out, transform 0.3s ease;
-        }
-        .fade-in {
-            opacity: 1 !important;
-            transform: translateY(0px);
-        }
-        .hidden {
+        
+        /* Utility classes mapping to CSS variables */
+        .bg-primary-accent { background-color: var(--color-primary-accent); }
+        .hover\:bg-primary-hover:hover { background-color: var(--color-primary-hover); }
+        .text-primary-accent { color: var(--color-primary-accent); }
+        .border-primary-accent { border-color: var(--color-primary-accent); }
+        .text-highlight { color: var(--color-highlight-text); }
+        .bg-section-light { background-color: var(--color-bg-section); }
+        .text-dark-neutral { color: var(--color-dark-neutral); }
+        /* ===================================== */
+        /* === 🎨 CUSTOM COLOR DEFINITIONS END === */
+        /* ===================================== */
+
+
+        /* Typography */
+        .font-display { font-family: 'Montserrat', sans-serif; }
+        body { font-family: 'Roboto', sans-serif; }
+        
+        /* Custom Transition for Sections */
+        section {
             opacity: 0;
             transform: translateY(20px);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
             pointer-events: none;
-            position: absolute;
+            position: absolute; 
+            width: 100%;
+            display: none;
+        }
+        section.active {
+            opacity: 1;
+            transform: translateY(0);
+            display: block;
+            position: relative; 
+            pointer-events: auto;
+        }
+
+        /* Active Navigation Button Style (Desktop) */
+        .nav-btn.active.desktop-style {
+            color: var(--color-primary-accent);
+            border-bottom: 3px solid var(--color-primary-accent);
+            padding-bottom: 4px;
+            font-weight: 700;
+        }
+        
+        /* Mobile Menu Styling */
+        @media (max-width: 640px) {
+            #nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                background-color: #ffffff;
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+                padding: 1rem 0;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                z-index: 40;
+                border-top: 1px solid #e5e7eb;
+            }
+            #nav-links.open {
+                display: flex;
+            }
+            #nav-links .nav-btn {
+                padding: 0.75rem 1.5rem;
+                text-align: left;
+                width: 100%;
+                border-bottom: 1px solid #f3f4f6;
+            }
+            .nav-btn.active { /* Mobile active style */
+                border-bottom: none; 
+                background-color: #f3f4f6; 
+                color: var(--color-primary-accent);
+            }
+            .mobile-menu-toggle {
+                display: block;
+            }
+            .desktop-nav {
+                display: none;
+            }
+        }
+        
+        /* Desktop Navigation Styling */
+        @media (min-width: 641px) {
+             .mobile-menu-toggle {
+                display: none;
+            }
+            .desktop-nav {
+                display: flex;
+            }
         }
     </style>
 </head>
 
-<body class="bg-gray-100 text-gray-800">
+<body class="bg-gray-100 text-dark-neutral pb-20">
 
-<!-- Scroll to Top Button -->
 <button onclick="window.scrollTo({ top: 0, behavior: 'smooth' });"
-    class="fixed bottom-5 right-5 bg-gray-800 text-white px-4 py-2 rounded-full shadow-md hover:bg-gray-700 transition-opacity duration-300 z-50">
-    ↑ Top
+    class="fixed bottom-5 right-5 bg-primary-accent text-white p-3 rounded-full shadow-lg hover:bg-primary-hover transition z-50">
+    <i class="fas fa-arrow-up"></i>
 </button>
-<!-- Header -->
-<!-- <header class="sticky top-0 z-50 bg-white shadow-sm">
-  <div class="max-w-6xl mx-auto flex justify-between items-center py-4 px-6">
-    <h1 class="font-bold text-lg text-gray-800">Sahukari Chandan Chowdary</h1>
-    <nav class="flex flex-wrap justify-center gap-4 mt-4">
-    <a class="nav-link text-gray-600 hover:text-gray-900" href="#" onclick="showSection('home')">Home</a>
-    <a class="nav-link text-gray-600 hover:text-gray-900" href="#" onclick="showSection('education-skills')">Education & Skills</a>
-    <a class="nav-link text-gray-600 hover:text-gray-900" href="#" onclick="showSection('projects')">Projects</a>
-    <a class="nav-link text-gray-600 hover:text-gray-900" href="#" onclick="showSection('experience')">Experience</a>
-    <a class="nav-link text-gray-600 hover:text-gray-900" href="#" onclick="showSection('About')">About</a>
-</nav>
-  </div>
-</header> -->
 
+<header class="bg-white shadow-lg sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto flex justify-between items-center py-4 px-6 relative">
+        <h1 class="font-display text-2xl font-bold text-primary-accent tracking-wide">Sahukari Chandan Chowdary</h1>
 
-<!-- Navigation -->
-<nav class="flex flex-wrap justify-center gap-4 mt-4">
-    <a class="nav-link text-gray-600 hover:text-blue-600" href="#" onclick="showSection('home')">Home</a>
-    <a class="nav-link text-gray-600 hover:text-blue-600" href="#" onclick="showSection('education-skills')">Education & Skills</a>
-    <a class="nav-link text-gray-600 hover:text-blue-600" href="#" onclick="showSection('projects')">Projects</a>
-    <a class="nav-link text-gray-600 hover:text-blue-600" href="#" onclick="showSection('experience')">Experience</a>
-    <a class="nav-link text-gray-600 hover:text-blue-600" href="#" onclick="showSection('About')">About</a>
-</nav> 
+        <button id="menu-toggle" class="mobile-menu-toggle text-primary-accent text-xl p-2 rounded hover:bg-gray-100 transition">
+            <i class="fas fa-bars"></i>
+        </button>
 
-<!-- Home Section -->
-
-<!-- <main id="home" class="active-section text-center py-20 px-4">
-  <h2 class="text-4xl font-bold text-blue-700 mb-4">Hi, I'm Sahukari Chandan Chowdary</h2>
-  <p class="max-w-2xl mx-auto text-gray-600 text-lg leading-relaxed">
-    SQL Developer improving HRMS systems by optimizing database operations and boosting query performance.
-    Skilled in Python, Flask, and Machine Learning — passionate about building reliable, efficient backend systems.
-  </p>
-  <div class="mt-8 flex flex-wrap justify-center gap-4">
-    <button onclick="showSection('education-skills')" class="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition">Education & Skills</button>
-    <button onclick="showSection('projects')" class="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition">Projects</button>
-    <button onclick="showSection('experience')" class="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition">Experience</button>
-    <a href="Chandan_Chowdary_Resume.pdf" download class="bg-green-600 text-white px-6 py-2 rounded-full hover:bg-green-700 transition">Download Resume</a>
-  </div>
-</main> -->
-
-<main id="home" class="flex flex-col items-center mt-16 text-center px-4">
-    <h1 class="text-5xl font-bold mt-8">Hi, I'm Sahukari Chandan Chowdary</h1>
-    <p class="mt-4 max-w-2xl text-gray-600 text-lg leading-relaxed">
-        SQL Developer improving HRMS systems by optimizing database operations, boosting query efficiency by 25–30%.
-        Skilled in Python, Flask, backend development, and machine learning, dedicated to building fast, reliable, and impactful software.
-    </p>
-
-    <div class="flex flex-wrap justify-center gap-4 mt-8">
-        <a class="bg-[#3C4A77] text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-[#2B3755] transition-all duration-300 transform hover:scale-110 hover:shadow-xl" href="#" onclick="showSection('education-skills')">Education & Skills</a>
-        <a class="bg-[#3C4A77] text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-[#2B3755] transition-all duration-300 transform hover:scale-110 hover:shadow-xl" href="#" onclick="showSection('projects')">Projects</a>
-        <a class="bg-[#3C4A77] text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-[#2B3755] transition-all duration-300 transform hover:scale-110 hover:shadow-xl" href="#" onclick="showSection('experience')">Experience</a>
-        <a class="bg-[#3C4A77] text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-[#2B3755] transition-all duration-300 transform hover:scale-110 hover:shadow-xl" href="#" onclick="showSection('About')">About</a>
-        <a href="Chandan_Chowdary_Resume.pdf" download class="bg-[#3C4A77] text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-[#2B3755] transition-all duration-300 transform hover:scale-110 hover:shadow-lg">Download Resume</a>
+        <nav id="nav-links" class="desktop-nav flex gap-4 sm:gap-8">
+            <button class="nav-btn text-gray-600 hover:text-primary-accent font-semibold transition desktop-style" data-target="home">Home</button>
+            <button class="nav-btn text-gray-600 hover:text-primary-accent font-semibold transition desktop-style" data-target="experience">Experience</button>
+            <button class="nav-btn text-gray-600 hover:text-primary-accent font-semibold transition desktop-style" data-target="projects">Projects</button>
+            <button class="nav-btn text-gray-600 hover:text-primary-accent font-semibold transition desktop-style" data-target="about">About Me</button>
+        </nav>
     </div>
-</main>
+</header>
 
-<!-- Education & Skills Section -->
-<section id="education-skills" class="hidden mt-16 p-8 bg-white rounded-lg shadow-md max-w-4xl mx-auto space-y-10">
+<div class="max-w-6xl mx-auto px-4 mt-12 relative min-h-screen">
+<section id="home" class="active text-center py-10 bg-white shadow-xl rounded-lg border-t-4 border-primary-accent">
+    <div class="p-8">
+        <h2 class="text-4xl sm:text-6xl font-display font-extrabold text-primary-accent leading-tight">
+            Hi, I'm Sahukari Chandan Chowdary
+        </h2>
 
-    <!-- Education -->
-    <div class="bg-gray-50 p-6 rounded-lg shadow">
-        <h2 class="text-3xl font-bold mb-4">Education</h2>
-        <div class="grid gap-6 md:grid-cols-2">
-            <div>
-                <h3 class="text-xl font-semibold">MCA</h3>
-                <p>Chaitanya Bharathi Institute of Technology, Hyderabad</p>
-                <p class="text-sm text-gray-500">Nov 2022 – Jun 2024</p>
-                <p><strong>CGPA:</strong> 8.57</p>
-            </div>
-            <div>
-                <h3 class="text-xl font-semibold">B.Sc in Computers</h3>
-                <p>Gayatri Vidya Parishad, Visakhapatnam</p>
-                <p class="text-sm text-gray-500">Jul 2018 – Aug 2021</p>
-                <p><strong>CGPA:</strong> 8.03</p>
-            </div>
-            <div>
-                <h3 class="text-xl font-semibold">Intermediate (MPC)</h3>
-                <p>Swarna Bharathi Junior College, Icchapuram</p>
-                <p class="text-sm text-gray-500">Jun 2016 – Apr 2018</p>
-                <p><strong>Marks:</strong> 926 / 1000</p>
-            </div>
-            <div>
-                <h3 class="text-xl font-semibold">SSC</h3>
-                <p>Government Boys High School, Icchapuram</p>
-                <p class="text-sm text-gray-500">2015 – 2016</p>
-                <p><strong>CGPA:</strong> 9.0</p>
-            </div>
+        <p class="mt-6 max-w-3xl mx-auto text-dark-neutral text-base sm:text-xl leading-relaxed">
+               A SQL Developer passionate about building efficient and reliable backend solutions. I work with Python and Java, and have developed personal projects using Flask and machine learning. Currently, I’m expanding my skills by learning Power BI to bring data-driven insights to life. I love solving complex problems and creating software that makes an impact.
+        </p>
+
+        <div class="flex flex-wrap justify-center gap-4 sm:gap-6 mt-12">
+            <button data-target="experience" class="nav-btn bg-primary-accent text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full text-base sm:text-lg font-bold hover:bg-primary-hover transition-all transform hover:scale-105 shadow-md">
+                View Experience <i class="fas fa-arrow-right ml-2"></i>
+            </button>
+
+            <button data-target="projects" class="nav-btn bg-primary-accent text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full text-base sm:text-lg font-bold hover:bg-primary-hover transition-all transform hover:scale-105 shadow-md">
+                View Projects <i class="fas fa-laptop-code ml-2"></i>
+            </button>
+
+            <a href="Chandan_Chowdary_Resume.pdf" download 
+               class="bg-primary-accent text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full text-base sm:text-lg font-bold hover:bg-primary-hover transition-all transform hover:scale-105 shadow-md">
+                Download Resume <i class="fas fa-download ml-2"></i>
+            </a>
         </div>
     </div>
-
-    <!-- Skills -->
-    <div class="bg-gray-50 p-6 rounded-lg shadow">
-        <h2 class="text-3xl font-bold mb-4">Technical Skills</h2>
-        <ul class="list-disc list-inside space-y-2 text-gray-700">
-            <li><strong>Programming Languages:</strong> Python, Core Java, C</li>
-            <li><strong>Databases:</strong> MySQL, MariaDB, Database Design, Query Optimization, Joins, Views</li>
-            <li><strong>Frameworks & Tools:</strong> Flask, Streamlit, Pandas, NumPy, Scikit-learn, Postman, Git, JIRA, Excel</li>
-            <li><strong>Core Areas:</strong> Backend Development, API Integration, Machine Learning, Database Management</li>
-            <li><strong>Soft Skills:</strong> Problem Solving, Analytical Thinking, Team Collaboration, Self-Learning</li>
-        </ul>
-    </div>
-
-    <!-- Certifications -->
-    <!-- Certifications Box -->
-<div class="bg-gray-50 p-6 rounded-lg shadow">
-    <h2 class="text-3xl font-bold mb-4">Certifications</h2>
-    <ul class="list-disc list-inside space-y-2 text-gray-700">
-        <li><strong>Accenture Developer Virtual Experience Program:</strong> Completed simulated job environment, demonstrating practical development skills.</li>
-        <li><strong>Python Programming Certifications:</strong> Completed foundational courses from Coding Ninjas and HackerRank.</li>
-        <a href="https://www.hackerrank.com/certificates/iframe/fb5b1f48803a" 
-           target="_blank"
-           class="inline-block mt-2 bg-[#3C4A77] text-white font-semibold px-4 py-1 rounded hover:bg-[#2B3755] transition">
-           View Certificate
-        </a>
-        <li>
-            <strong>Problem Solving – HackerRank (Basic) & CodeChef (Silver Badge):</strong> 
-            Demonstrated strong algorithmic and logical reasoning skills across both platforms.
-            <br />
-            <a href="https://www.hackerrank.com/certificates/770d03b5f48f" 
-               target="_blank"
-               class="inline-block mt-2 bg-[#3C4A77] text-white font-semibold px-4 py-1 rounded hover:bg-[#2B3755] transition">
-               View Certificate
-            </a>
-        </li>
-
-        <li><strong>SQL Certification – HackerRank:</strong> Validated proficiency in SQL queries, joins, and data manipulation.</li>
-        <a href="https://www.hackerrank.com/certificates/iframe/c26e89b20ce5" 
-           target="_blank"
-           class="inline-block mt-2 bg-[#3C4A77] text-white font-semibold px-4 py-1 rounded hover:bg-[#2B3755] transition">
-           View Certificate
-        </a>
-        <a href="https://www.hackerrank.com/certificates/iframe/ba9a3e0976f3" 
-           target="_blank"
-           class="inline-block mt-2 bg-[#3C4A77] text-white font-semibold px-4 py-1 rounded hover:bg-[#2B3755] transition">
-           View Certificate
-        </a>
-        <li><strong>Java Basic Certification – HackerRank:</strong> Demonstrated proficiency in Java programming basics.</li>
-        <a href="https://www.hackerrank.com/certificates/iframe/c422db58c14d" 
-           target="_blank"
-           class="inline-block mt-2 bg-[#3C4A77] text-white font-semibold px-4 py-1 rounded hover:bg-[#2B3755] transition">
-           View Certificate      
-        </a>
-    </ul>
-</div>
-
 </section>
 
-<section id="projects" class="hidden mt-16 p-8 bg-white rounded-lg shadow-md max-w-4xl mx-auto">
-  <h2 class="text-3xl font-bold mb-8 text-center">Technical Projects</h2>
 
-  <div class="space-y-10">
+<section id="experience" class="mt-12 p-6 sm:p-10 bg-white shadow-xl rounded-lg border-t-4 border-primary-accent">
+    <h2 class="text-3xl sm:text-4xl font-display font-bold text-primary-accent mb-6 sm:mb-8 text-center">
+        <i class="fas fa-briefcase mr-3 text-highlight"></i> Professional Experience
+    </h2>
+    <hr class="mb-6 sm:mb-8 border-gray-200">
 
-    <!-- Project 1 -->
-    <div class="bg-gray-50 p-6 rounded-lg shadow hover:shadow-lg transition">
-      <h3 class="text-2xl font-semibold text-gray-900">Flask-Based Full-Stack Mechanic Shop Management System</h3>
-      <p class="mt-2 text-gray-700">
-        Developed a full-stack web application using Flask to manage repair shop appointments, customer data, and admin functionalities.
-      </p>
-      <p class="mt-2 text-sm text-gray-500"><strong>Tech Stack:</strong> Python, Flask, Flask-SQLAlchemy, Pandas, SQLite, HTML/CSS, Git</p>
-      <ul class="list-disc list-inside text-gray-700 mt-3 space-y-1">
-        <li><strong>Appointment Booking:</strong> Customers can book, reschedule, and cancel appointments for device repairs.</li>
-        <li><strong>Admin Dashboard:</strong> Admins can view, filter, and update appointment statuses and export data to Excel.</li>
-        <li><strong>Security:</strong> Integrated Flask-Login for user authentication, ensuring secure admin access.</li>
-        <li><strong>Excel Export:</strong> Enabled exporting all appointments to Excel using Pandas for business reporting.</li>
-        <li><strong>Appointment Limit:</strong> Implemented daily appointment limits based on business rules.</li>
-      </ul>
-    </div>
-
-    <!-- Project 2 -->
-    <div class="bg-gray-50 p-6 rounded-lg shadow hover:shadow-lg transition">
-      <h3 class="text-2xl font-semibold text-gray-900">Phish Catcher</h3>
-      <p class="mt-2 text-gray-700">
-        Developed a Flask-based machine learning web app to detect phishing URLs and protect users from malicious websites.
-      </p>
-      <p class="mt-2 text-sm text-gray-500"><strong>Tech Stack:</strong> Python, Flask, Scikit-learn, XGBoost, Pandas, NumPy, HTML, CSS, Bootstrap</p>
-      <ul class="list-disc list-inside text-gray-700 mt-3 space-y-1">
-        <li>Implemented an ensemble model combining SVM and XGBoost, achieving <strong>90% accuracy</strong> on test data.</li>
-        <li>Extracted and analyzed URL features like domain length, special characters, and HTTPS usage to improve predictions.</li>
-        <li>Deployed the trained model using Flask for real-time phishing detection via a user-friendly web interface.</li>
-      </ul>
-    </div>
-
-    <!-- Project 3 -->
-    <div class="bg-gray-50 p-6 rounded-lg shadow hover:shadow-lg transition">
-      <h3 class="text-2xl font-semibold text-gray-900">Fraud Detection in Medical Insurance</h3>
-      <p class="mt-2 text-gray-700">
-        Designed and built a machine learning-powered Flask web app to detect fraudulent medical insurance claims with high accuracy.
-      </p>
-      <p class="mt-2 text-sm text-gray-500"><strong>Tech Stack:</strong> Python, Flask, Scikit-learn, Pandas, NumPy, HTML, CSS, Bootstrap</p>
-      <ul class="list-disc list-inside text-gray-700 mt-3 space-y-1">
-        <li><strong>ML Pipeline & Optimization:</strong> Built a full ML workflow with preprocessing, feature selection, and tuning using SVM with GridSearchCV, achieving <strong>92% accuracy</strong>.</li>
-        <li>Integrated the model into a Flask backend for real-time fraud detection via a user input web interface.</li>
-        <li>Used confusion matrix and accuracy metrics to evaluate and visualize model performance.</li>
-      </ul>
-    </div>
-
-  </div>
-</section>
-
-<!-- Experience Section -->
-<section id="experience" class="hidden mt-16 p-8 bg-white rounded-lg shadow-md max-w-4xl mx-auto">
-    <h2 class="text-3xl font-bold mb-6 text-center">Professional Experience</h2>
-    <div class="space-y-8">
-        <div class="bg-gray-50 p-6 rounded-lg shadow">
-            <h3 class="text-2xl font-semibold mb-2">SQL Developer | Back End Developer</h3>
-            <p class="text-lg font-medium text-gray-700">OASYS Cybernetics Pvt. Ltd., Chennai</p>
-            <p class="text-sm text-gray-500 mb-4">Mar 2025 – Present</p>
-            <ul class="list-disc list-inside ml-4 text-gray-700 space-y-1">
+    <div class="space-y-10">
+        <div class="bg-section-light border-l-4 sm:border-l-8 border-primary-accent p-6 shadow-md rounded-lg hover:shadow-lg transition">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-2">
+                <h3 class="text-xl sm:text-2xl font-display font-bold text-dark-neutral">SQL Developer | Back End Developer</h3>
+                <span class="text-sm font-semibold text-primary-accent bg-primary-accent/10 px-3 py-1 rounded-full mt-2 sm:mt-0">Mar 2025 – Present</span>
+            </div>
+            <p class="text-base sm:text-lg font-medium text-dark-neutral">OASYS Cybernetics Pvt. Ltd., Chennai</p>
+            
+            <ul class="list-disc ml-6 mt-4 text-dark-neutral space-y-2 text-sm sm:text-base">
                 <li>Collaborate with API and UI teams to understand business logic, database relationships, and identify key tables behind HRMS screens and workflows.</li>
-                <li>Design, write, and optimize SQL queries and stored procedures to support backend data retrieval, filtering, and update operations.</li>
+                <li>Design, write, and optimize SQL queries to support backend data retrieval, filtering, and update operations.</li>
                 <li>Test database interactions using Postman (POST methods) to verify query responses and ensure data accuracy and consistency.</li>
                 <li>Execute and validate queries, then share the payload and response outputs with the UI team for seamless integration into application screens.</li>
                 <li>Provide data code support for new feature development, bug fixes, and internal reporting requirements.</li>
@@ -251,11 +191,14 @@
             </ul>
         </div>
 
-        <div class="bg-gray-50 p-6 rounded-lg shadow">
-            <h3 class="text-2xl font-semibold mb-2">Machine Learning Intern</h3>
-            <p class="text-lg font-medium text-gray-700">OASYS Cybernetics Pvt. Ltd., Chennai</p>
-            <p class="text-sm text-gray-500 mb-4">Sept 2021 – Feb 2022</p>
-            <ul class="list-disc list-inside ml-4 text-gray-700 space-y-1">
+        <div class="bg-section-light border-l-4 sm:border-l-8 border-primary-accent p-6 shadow-md rounded-lg hover:shadow-lg transition">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-2">
+                <h3 class="text-xl sm:text-2xl font-display font-bold text-dark-neutral">Machine Learning Intern</h3>
+                <span class="text-sm font-semibold text-primary-accent bg-primary-accent/10 px-3 py-1 rounded-full mt-2 sm:mt-0">Sept 2021 – Feb 2022</span>
+            </div>
+            <p class="text-base sm:text-lg font-medium text-dark-neutral">OASYS Cybernetics Pvt. Ltd., Chennai</p>
+            
+            <ul class="list-disc ml-6 mt-4 text-dark-neutral space-y-2 text-sm sm:text-base">
                 <li>Worked on machine learning projects, including data preprocessing, model development, and algorithm optimization.</li>
                 <li>Utilized Python, Pandas, and NumPy for dataset preparation, coding, and implementing ML models.</li>
                 <li>Collaborated with senior developers to learn industry best practices, coding standards, and efficient workflows.</li>
@@ -263,116 +206,265 @@
             </ul>
         </div>
     </div>
-</section>
-<!-- About Section -->
-<section id="About" class="hidden mt-16 p-8 bg-gradient-to-b from-white to-gray-50 rounded-lg shadow-lg max-w-4xl mx-auto">
-    <div class="text-center mb-8">
-        <h2 class="text-4xl font-extrabold text-gray-800 mb-2">About Me</h2>
-        <div class="w-20 h-1 bg-blue-600 mx-auto mb-4 rounded-full"></div>
-        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-            Passionate SQL Developer and Backend Engineer dedicated to building efficient, scalable, and impactful solutions.
-            I enjoy learning new technologies, collaborating with teams, and creating systems that make a real difference.
-        </p>
-    </div>
 
-    <!-- Contact Info Cards -->
-    <div class="grid md:grid-cols-2 gap-6 text-gray-700 mt-10">
-        <div class="bg-white border border-gray-200 rounded-lg p-6 shadow hover:shadow-md transition">
-            <h3 class="text-xl font-semibold text-gray-900 mb-3 flex items-center"><i class="fas fa-phone-alt mr-2 text-gray-600"></i>Phone</h3>
-            <p class="text-gray-800">+91 8309443303</p>
-        </div>
-        <div class="bg-white border border-gray-200 rounded-lg p-6 shadow hover:shadow-md transition">
-            <h3 class="text-xl font-semibold text-gray-900 mb-3 flex items-center"><i class="fas fa-envelope mr-2 text-gray-600"></i>Email</h3>
-            <a href="mailto:sahukarichandan2001@gmail.com" class="text-gray-600 hover:underline">sahukarichandan2001@gmail.com</a>
-        </div>
-        <div class="bg-white border border-gray-200 rounded-lg p-6 shadow hover:shadow-md transition">
-            <h3 class="text-xl font-semibold text-gray-900 mb-3 flex items-center"><i class="fas fa-globe mr-2 text-gray-600"></i>Portfolio</h3>
-            <a href="https://chandan-2025.github.io/portfolio" target="_blank" class="text-gray-600 hover:underline">chandan-2025.github.io/portfolio</a>
-        </div>
-        <div class="bg-white border border-gray-200 rounded-lg p-6 shadow hover:shadow-md transition">
-            <h3 class="text-xl font-semibold text-gray-900 mb-3 flex items-center"><i class="fab fa-linkedin mr-2 text-gray-600"></i>LinkedIn</h3>
-            <a href="https://linkedin.com/in/chandanchowdary" target="_blank" class="text-gray-600 hover:underline">linkedin.com/in/chandanchowdary</a>
-        </div>
-    </div>
-
-    <!-- Interests & Languages Section -->
-    <div class="mt-14 grid md:grid-cols-2 gap-8">
-        <!-- Interests & Hobbies -->
-        <div class="bg-white border border-gray-200 rounded-lg p-8 shadow-md hover:shadow-lg transition">
-            <h3 class="text-2xl font-bold text-gray-900 mb-4 flex items-center">
-                <i class="fas fa-heart mr-3 text-gray-900"></i>Interests & Hobbies
-            </h3>
-            <ul class="list-disc list-inside space-y-2 text-gray-700 leading-relaxed">
-                <li>Reading novels and exploring new ideas</li>
-                <li>Listening to tech and productivity podcasts</li>
-                <li>Playing sports and staying active</li>
-                <li>Exploring new places and cultures</li>
-            </ul>
-        </div>
-
-        <!-- Languages -->
-        <div class="bg-white border border-gray-200 rounded-lg p-8 shadow-md hover:shadow-lg transition">
-            <h3 class="text-2xl font-bold text-gray-900 mb-4 flex items-center">
-                <i class="fas fa-language mr-3 text-gray-900"></i>Languages I Speak
-            </h3>
-            <ul class="list-disc list-inside space-y-2 text-gray-700 leading-relaxed">
-                <li>English</li>
-                <li>Telugu</li>
-                <li>Hindi</li>
-                <li>Oriya</li>
-            </ul>
-        </div>
-    </div>
-
-    <!-- Back to Home Button -->
     <div class="text-center mt-12">
-        <button onclick="showSection('home')"
-            class="bg-gray-500 text-white font-semibold px-6 py-3 rounded-full hover:bg-gray-900 transition transform hover:scale-105 shadow-md">
-            ← Back to Home
+        <button data-target="home" class="nav-btn bg-gray-200 text-primary-accent px-6 py-3 rounded-full font-bold hover:bg-gray-300 transition-all shadow-md">
+            <i class="fas fa-arrow-left mr-2"></i> Back to Home
         </button>
     </div>
 </section>
+
+<section id="projects" class="mt-12 p-6 sm:p-10 bg-white shadow-xl rounded-lg border-t-4 border-primary-accent">
+    <h2 class="text-3xl sm:text-4xl font-display font-bold text-primary-accent mb-6 sm:mb-8 text-center"><i class="fas fa-laptop-code mr-3 text-highlight"></i> Technical Projects</h2>
+    <hr class="mb-6 sm:mb-8 border-gray-200">
+
+    <h3 class="text-2xl font-display font-bold text-dark-neutral mb-4 border-b pb-2"><i class="fas fa-building mr-2 text-highlight"></i> 1. Company / Professional Projects </h3>
+
+    <div class="space-y-8 mb-10">
+        <div class="bg-section-light p-6 shadow-md rounded-lg border-l-4 border-primary-accent hover:shadow-xl transition">
+            <h4 class="text-xl font-display font-bold text-primary-accent mb-2 flex items-center"><i class="fas fa-database mr-2"></i> HRMS Database Optimization & Feature Development</h4>
+            <p class="text-dark-neutral text-xs sm:text-sm mb-4"> Role: SQL Developer / Backend Data Support | Technology: MySQL, MariaDB, Postman, SQL (backend data support for React/Java Spring application).</p>
+            <ul class="list-disc ml-4 text-dark-neutral text-sm space-y-1">
+                <li>Developed and maintained the complete SQL layer for the HRMS application, including queries, views, and stored procedures used across screens, dashboards, and workflow components.</li>
+                <li>Optimized data retrieval performance by applying indexing, refining JOIN operations, and restructuring queries to ensure fast and consistent loading across the UI.</li>
+                <li>Improved overall system efficiency by tuning existing stored procedures and enhancing the backend logic supporting various HRMS features.</li>
+                <li>Verified backend-to-frontend data accuracy using Postman and supported UI/API teams by ensuring proper data mapping and smooth integration.</li>
+                <li>Implemented reusable SQL views and clean data logic to maintain consistency, accuracy, and integrity across all HRMS modules.</li>
+                <li>Collaborated with frontend, QA, and API teams throughout development and deployment cycles, providing continuous data-code support and resolving backend data issues.</li>
+            </ul>
+        </div>
+
+        <div class="bg-section-light p-6 shadow-md rounded-lg border-l-4 border-primary-accent hover:shadow-xl transition">
+            <h4 class="text-xl font-display font-bold text-primary-accent mb-2 flex items-center"><i class="fas fa-chalkboard-teacher mr-2"></i> Training Portal Microservice (Backend Data Support)</h4>
+            <p class="text-dark-neutral text-xs sm:text-sm mb-4">Role: SQL Developer / Backend Data Support | Technology: MySQL, MariaDB, Postman, SQL (backend data support for React/Java Spring application).</p>
+            <ul class="list-disc ml-4 text-dark-neutral text-sm space-y-1">
+                <li>Uploaded and managed course content, including videos and images, to production servers using FTP, ensuring timely and accurate availability.</li>
+                <li>Developed optimized SQL queries and views to fetch course data, track user progress, and display course and instructor ratings to end users.</li>
+                <li>Provided reliable backend responses to support UI screens, dashboards, and progress tracking features.</li>
+                <li>Validated backend data and API responses using Postman to ensure smooth integration with frontend components and HRMS authentication.</li>
+                <li>Implemented reusable SQL logic to maintain data consistency, integrity, and high performance across all portal features.</li>
+                 <li>Collaborated with frontend and QA teams to provide ongoing data-code support during feature development, testing, and production deployment.</li>
+            </ul>
+        </div>
+    </div>
+    
+    <h3 class="text-2xl font-display font-bold text-dark-neutral mb-4 border-b pb-2"><i class="fas fa-user-graduate mr-2 text-highlight"></i> 2. Personal / Academic Projects (Full-Stack & ML)</h3>
+    
+    <div class="space-y-8">
+        <div class="bg-section-light p-6 shadow-md rounded-lg border-l-4 border-primary-accent hover:shadow-xl transition">
+            <h4 class="text-xl font-display font-bold text-primary-accent mb-2 flex items-center"><i class="fas fa-wrench mr-2"></i> Flask-Based Full-Stack Mechanic Shop Management System</h4>
+            <p class="text-dark-neutral text-xs sm:text-sm mb-4">Tech Stack: Python, Flask, Flask-SQLAlchemy, Pandas, SQLite, HTML/CSS, Git.</p>
+            <ul class="list-disc ml-4 text-dark-neutral text-sm space-y-1">
+                <li><strong>Description:</strong> Developed a full-stack web application for a repair shop to manage appointments, customer data, and admin operations.</li>
+                <li>Implemented secure user authentication using Flask-Login to ensure only authorized access to admin features, improving system security.</li>
+                <li>Built appointment management and daily limit enforcement features, ensuring smooth workflow and preventing overbooking.</li>
+                <li>Enabled data export to Excel using Pandas, allowing admins to efficiently analyze and report appointment data.</li>
+            </ul>
+        </div>
+
+        <div class="bg-section-light p-6 shadow-md rounded-lg border-l-4 border-primary-accent hover:shadow-xl transition">
+            <h4 class="text-xl font-display font-bold text-primary-accent mb-2 flex items-center"><i class="fas fa-shield-alt mr-2"></i> Phish Catcher (ML Web Application)</h4>
+            <p class="text-dark-neutral text-xs sm:text-sm mb-4">Tech Stack: Python, Flask, Scikit-learn, XGBoost, Pandas, NumPy, HTML, CSS, Bootstrap.</p>
+            <ul class="list-disc ml-4 text-dark-neutral text-sm space-y-1">
+                <li><strong>Description:</strong> Developed a Flask-based machine learning web application to detect phishing URLs in real time.</li>
+                <li>Designed and trained an ensemble model combining SVM and XGBoost algorithms, achieving 90% accuracy on test data to reliably identify phishing attempts.</li>
+                <li>Extracted and analyzed key URL-based features, improving the model’s prediction reliability and robustness.</li>
+                <li>Deployed the trained model using Flask, providing a user-friendly web interface for instant phishing detection and practical application.</li>
+            </ul>
+        </div>
+
+        <div class="bg-section-light p-6 shadow-md rounded-lg border-l-4 border-primary-accent hover:shadow-xl transition">
+            <h4 class="text-xl font-display font-bold text-primary-accent mb-2 flex items-center"><i class="fas fa-search-dollar mr-2"></i> Fraud Detection in Medical Insurance (ML Web Application)</h4>
+            <p class="text-dark-neutral text-xs sm:text-sm mb-4">Tech Stack: Python, Flask, SVM, GridSearchCV, Pandas, NumPy, Bootstrap.</p>
+            <ul class="list-disc ml-4 text-dark-neutral text-sm space-y-1">
+                <li><strong>Description:</strong> Designed and developed a machine learning-powered Flask web application to detect fraudulent medical insurance claims in real time.</li>
+                <li>Built an ML workflow using Support Vector Machine (SVM) with GridSearchCV, achieving 92% accuracy on test data to reliably identify fraudulent claims.</li>
+                <li>Integrated the trained ML model into the Flask backend, enabling real-time fraud predictions based on user-submitted claim details.</li>
+                <li>Evaluated model performance using confusion matrix and accuracy metrics to ensure robustness and reliability of predictions.</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="text-center mt-12">
+        <button data-target="home" class="nav-btn bg-gray-200 text-primary-accent px-6 py-3 rounded-full font-bold hover:bg-gray-300 transition-all shadow-md">
+            <i class="fas fa-arrow-left mr-2"></i> Back to Home
+        </button>
+    </div>
+</section>
+
+<section id="about" class="mt-12 bg-white p-6 sm:p-10 shadow-xl rounded-lg border-t-4 border-primary-accent">
+    <h2 class="text-3xl sm:text-4xl font-display font-bold text-primary-accent mb-6 sm:mb-8 text-center"><i class="fas fa-user-tie mr-3 text-highlight"></i> About Me </h2>
+    <hr class="mb-6 sm:mb-8 border-gray-200">
+
+    <div class="mb-10 p-4 bg-primary-accent/5 rounded-lg border-l-4 border-primary-accent">
+        <h3 class="text-xl font-display font-bold text-primary-accent mb-2">Summary</h3>
+        <p class="text-dark-neutral text-base sm:text-lg leading-relaxed">
+            SQL Developer with hands-on experience optimizing HRMS systems, improving database operations, and boosting query efficiency by 25–30%. Skilled in Python, Java, Flask, backend development, and machine learning, with a track record of delivering fast, reliable, and data-driven solutions. Currently expanding expertise in Power BI to create actionable insights and support data-driven decision-making.
+        </p>
+    </div>
+    
+    <hr class="my-8 border-gray-200">
+
+    <h3 class="text-3xl font-bold text-primary-accent mb-6 text-center"><i class="fas fa-graduation-cap mr-2 text-highlight"></i> Education</h3>
+    <div class="p-6 bg-section-light rounded-lg shadow-inner mb-10">
+        <h4 class="text-2xl font-bold text-primary-accent mb-4">Academic History</h4>
+        <div class="space-y-4">
+            <div class="border-l-4 border-primary-accent pl-4">
+                <p class="text-lg font-semibold">MCA (Master of Computer Applications)</p>
+                <p class="text-dark-neutral">Chaitanya Bharathi Institute of Technology (CBIT), Hyderabad</p>
+                <p class="text-sm text-gray-500">Nov 2022 – Jun 2024 | CGPA: 8.57</p>
+            </div>
+            <div class="border-l-4 border-primary-accent pl-4">
+                <p class="text-lg font-semibold">B.Sc in Computers</p>
+                <p class="text-dark-neutral">Gayatri Vidya Parishad, Visakhapatnam</p>
+                <p class="text-sm text-gray-500">Jul 2018 – Aug 2021 | CGPA: 8.03</p>
+            </div>
+            <div class="border-l-4 border-primary-accent pl-4">
+                <p class="text-lg font-semibold">Intermediate (MPC)</p>
+                <p class="text-dark-neutral">Swarna Bharathi Junior College, Icchapuram</p>
+                <p class="text-sm text-gray-500">Jun 2016 – Apr 2018 | Marks: 926 / 1000</p>
+            </div>
+            <div class="border-l-4 border-primary-accent pl-4">
+                <p class="text-lg font-semibold">SSC</p>
+                <p class="text-dark-neutral">Government Boys High School, Icchapuram</p>
+                <p class="text-sm text-gray-500">Jun 2016 | CGPA:9.0</p>
+            </div>
+
+        </div>
+    </div>
+    
+<hr class="my-8 border-gray-200">
+
+<h3 class="text-3xl font-bold text-primary-accent mb-6 text-center">
+    <i class="fas fa-tools mr-2 text-highlight"></i> Technical Skills
+</h3>
+<div class="p-6 bg-section-light rounded-lg shadow-inner mb-10">    
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-4 text-dark-neutral text-base">
+        <div>
+            <p class="font-bold text-primary-accent mb-1">Databases & SQL:</p>
+            <p>MySQL, MariaDB, Query Optimization, Stored Procedures, Joins</p>
+        </div>
+
+        <div>
+            <p class="font-bold text-primary-accent mb-1">Programming:</p>
+            <p>Python, Java, C</p>
+        </div>
+
+        <div>
+            <p class="font-bold text-primary-accent mb-1">Backend & Tools:</p>
+            <p>Flask, Streamlit, Postman, Git, JIRA</p>
+        </div>
+
+        <div>
+            <p class="font-bold text-primary-accent mb-1">ML & Data Science:</p>
+            <p>Pandas, NumPy, Scikit-learn, XGBoost, SVM</p>
+        </div>
+
+        <div>
+            <p class="font-bold text-primary-accent mb-1">Business Intelligence:</p>
+            <p>Power BI </p>
+        </div>
+
+        <div>
+            <p class="font-bold text-primary-accent mb-1">Core Focus:</p>
+            <p>Backend Development, Database Management, Data Analysis</p>
+        </div>
+    </div>
+
+    <h4 class="text-xl font-bold text-primary-accent mt-6 mb-4">Soft Skills</h4>
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-y-2 gap-x-6 text-dark-neutral text-base">
+        <p>Analytical Thinking</p>
+        <p>Problem Solving</p>
+        <p>Team Collaboration</p>
+        <p>Self-Learning</p>
+        <p>Adaptability</p>
+    </div>
+</div>
+    
+<hr class="my-8 border-gray-200">
+
+<h3 class="text-2xl font-display font-bold text-primary-accent mb-4 text-center"><i class="fas fa-address-card mr-2 text-highlight"></i> Contact & Links</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+    <div class="bg-section-light p-6 shadow-md rounded-lg text-center border-b-4 border-primary-accent hover:shadow-lg transition">
+        <h4 class="font-display font-semibold text-xl mb-2 text-primary-accent"><i class="fas fa-phone-alt"></i> Phone</h4>
+        <p class="text-dark-neutral">+91 8309443303</p>
+    </div>
+    <div class="bg-section-light p-6 shadow-md rounded-lg text-center border-b-4 border-primary-accent hover:shadow-lg transition">
+        <h4 class="font-display font-semibold text-xl mb-2 text-primary-accent"><i class="fas fa-envelope"></i> Email</h4>
+        <p class="text-dark-neutral break-words text-sm">sahukarichandan2001@gmail.com</p>
+    </div>
+    <div class="bg-section-light p-6 shadow-md rounded-lg text-center border-b-4 border-primary-accent hover:shadow-lg transition">
+        <h4 class="font-display font-semibold text-xl mb-2 text-primary-accent"><i class="fab fa-linkedin"></i> LinkedIn</h4>
+        <a href="https://linkedin.com/in/chandanchowdary" class="text-blue-600 hover:underline text-sm" target="_blank">
+            /in/chandanchowdary
+        </a>
+    </div>
+    <div class="bg-section-light p-6 shadow-md rounded-lg text-center border-b-4 border-primary-accent hover:shadow-lg transition">
+        <h4 class="font-display font-semibold text-xl mb-2 text-primary-accent"><i class="fas fa-language mr-2"></i> Languages</h4>
+        <p class="text-dark-neutral text-base">English, Telugu, Hindi, Oriya (Speak/Write)</p>
+    </div>
+</div>    
+    
+    <div class="text-center mt-12">
+        <button data-target="home" class="nav-btn bg-gray-200 text-primary-accent px-6 py-3 rounded-full font-bold hover:bg-gray-300 transition-all shadow-md">
+            <i class="fas fa-arrow-left mr-2"></i> Back to Home
+        </button>
+    </div>
+</section>
+
+</div>
+
 <script>
-    function showSection(sectionId) {
-        // Hide all sections
-        document.querySelectorAll('main, section').forEach(section => {
-            section.classList.add('hidden');
-            section.classList.remove('fade-in');
-        });
+    const navButtons = document.querySelectorAll(".nav-btn");
+    const sections = document.querySelectorAll("section");
+    const menuToggle = document.getElementById("menu-toggle");
+    const navLinksContainer = document.getElementById("nav-links");
 
-        // Remove active styles from all nav and buttons
-        document.querySelectorAll('.nav-link, .rounded-full').forEach(link => {
-            link.classList.remove('font-bold', 'ring-2', 'ring-offset-2', 'ring-blue-300');
-        });
-
-        // Show and animate the selected section
-        const section = document.getElementById(sectionId);
-        section.classList.remove('hidden');
-        setTimeout(() => section.classList.add('fade-in'), 10); // Delay for transition
-
-        // Highlight active nav link
-        const activeLink = Array.from(document.querySelectorAll('.nav-link')).find(link =>
-            link.getAttribute('onclick')?.includes(sectionId)
-        );
-        if (activeLink) {
-            activeLink.classList.add('font-bold', 'text-blue-600');
+    // Function to set the active section and active button style
+    function setActiveSection(targetId) {
+        sections.forEach(sec => sec.classList.remove("active"));
+        const targetSection = document.getElementById(targetId);
+        if (targetSection) {
+            targetSection.classList.add("active");
         }
 
-        // Highlight active rounded button
-        const activeButton = Array.from(document.querySelectorAll('.rounded-full')).find(btn =>
-            btn.getAttribute('onclick')?.includes(sectionId)
-        );
-        if (activeButton) {
-            activeButton.classList.add('ring-2', 'ring-offset-2', 'ring-blue-300');
-        }
+        // Handle navigation button styling: only for the main desktop/mobile nav buttons
+        navButtons.forEach(btn => {
+            // Check if the button belongs to the main header navigation
+            if (btn.classList.contains('desktop-style')) { 
+                btn.classList.remove("active");
+                if (btn.getAttribute("data-target") === targetId) {
+                    btn.classList.add("active");
+                }
+            }
+        });
     }
 
+    // Event listener for navigation buttons (including 'Back to Home' buttons)
+    navButtons.forEach(btn => {
+        btn.addEventListener("click", () => {
+            const target = btn.getAttribute("data-target");
+            setActiveSection(target);
+            // Scroll to the top of the content when switching sections
+            window.scrollTo({ top: 0, behavior: "smooth" });
+            
+            // Close mobile menu after selection
+            if (navLinksContainer.classList.contains('open')) {
+                navLinksContainer.classList.remove('open');
+            }
+        });
+    });
+
+    // Event listener for the Hamburger Menu Toggle
+    menuToggle.addEventListener('click', () => {
+        navLinksContainer.classList.toggle('open');
+    });
+
+    // Initialize: Set 'home' as active on load
     document.addEventListener("DOMContentLoaded", () => {
-        showSection('home');
+        setActiveSection('home');
     });
 </script>
 
 </body>
 </html>
-
-

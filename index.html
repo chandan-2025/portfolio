@@ -4,10 +4,30 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chandan Chowdary — SQL & Backend Developer</title>
+
+    <!-- ── EXTERNAL DEPENDENCIES ──────────────────────────────────────────
+         Tailwind  : utility CSS classes
+         FontAwesome: icons (fa-envelope, fa-github, etc.)
+         Google Fonts: Playfair Display (headings) + DM Sans (body)
+    ─────────────────────────────────────────────────────────────────── -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+
     <style>
+
+        /* ══════════════════════════════════════════════════════════════
+           🎨 DESIGN TOKENS — Edit only these to change the color theme
+           ══════════════════════════════════════════════════════════════
+           --ink      : main body text
+           --indigo   : primary brand color (headings, buttons, icons)
+           --gold     : accent color (underlines, labels, bullets)
+           --muted    : secondary / helper text
+           --light    : page background
+           --border   : card and divider borders
+           --white    : card backgrounds
+           --card-bg  : slightly off-white for nested surfaces
+        ══════════════════════════════════════════════════════════════ */
         :root {
             --ink:      #111218;
             --indigo:   #2E3267;
@@ -19,9 +39,9 @@
             --card-bg:  #FAFAF8;
         }
 
+        /* ── RESET & BASE ─────────────────────────────────────────── */
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         html { scroll-behavior: smooth; }
-
         body {
             font-family: 'DM Sans', sans-serif;
             background: var(--light);
@@ -29,10 +49,15 @@
             font-size: 15px;
             line-height: 1.6;
         }
-
+        /* Playfair Display used for all serif headings */
         .serif { font-family: 'Playfair Display', serif; }
 
-        /* ── PAGE SECTIONS ── */
+
+        /* ══════════════════════════════════════════════════════════════
+           📄 PAGE SECTIONS
+           Each <section> starts hidden. JS adds .active to show one.
+           Transition gives a smooth fade-up on switch.
+        ══════════════════════════════════════════════════════════════ */
         .page-section {
             display: none;
             opacity: 0;
@@ -45,13 +70,16 @@
             transform: translateY(0);
         }
 
-        /* ── HEADER ── */
+
+        /* ══════════════════════════════════════════════════════════════
+           🔝 HEADER & NAVIGATION
+        ══════════════════════════════════════════════════════════════ */
         #site-header {
             background: var(--white);
             border-bottom: 1px solid var(--border);
-            position: sticky;
+            position: sticky;    /* stays at top while scrolling */
             top: 0;
-            z-index: 100;
+            z-index: 100;        /* above all page content */
         }
         .header-inner {
             max-width: 900px;
@@ -62,6 +90,8 @@
             align-items: center;
             justify-content: space-between;
         }
+
+        /* Logo — "Chandan." with gold dot */
         .logo {
             font-family: 'Playfair Display', serif;
             font-size: 1.1rem;
@@ -70,7 +100,7 @@
         }
         .logo span { color: var(--gold); }
 
-        /* Desktop nav */
+        /* ── DESKTOP NAV (visible above 640px) ── */
         .desktop-nav { display: flex; align-items: center; gap: 2rem; }
         .nav-btn {
             font-size: 0.8rem;
@@ -85,6 +115,7 @@
             position: relative;
             transition: color 0.2s;
         }
+        /* Gold underline slides in on hover / active */
         .nav-btn::after {
             content: '';
             position: absolute;
@@ -100,9 +131,9 @@
         .nav-btn.active { color: var(--indigo); }
         .nav-btn.active::after { transform: scaleX(1); }
 
-        /* Mobile nav */
+        /* ── MOBILE HAMBURGER TOGGLE (hidden above 640px) ── */
         .mobile-toggle {
-            display: none;
+            display: none;   /* shown via media query below */
             background: none;
             border: none;
             cursor: pointer;
@@ -110,6 +141,9 @@
             font-size: 1.1rem;
             padding: 6px;
         }
+
+        /* ── MOBILE DROPDOWN MENU ── */
+        /* Hidden by default; JS toggles .open to show it */
         #mobile-menu {
             display: none;
             background: var(--white);
@@ -126,15 +160,20 @@
             width: 100%;
         }
         #mobile-menu .nav-btn:last-child { border-bottom: none; }
-        #mobile-menu .nav-btn::after { display: none; }
+        #mobile-menu .nav-btn::after { display: none; } /* no underline on mobile */
         #mobile-menu .nav-btn.active { color: var(--indigo); font-weight: 600; }
 
+        /* ── RESPONSIVE BREAKPOINT: mobile vs desktop nav ── */
         @media (max-width: 640px) {
-            .desktop-nav { display: none; }
-            .mobile-toggle { display: block; }
+            .desktop-nav { display: none; }       /* hide desktop nav */
+            .mobile-toggle { display: block; }    /* show hamburger */
         }
 
-        /* ── SCROLL TOP ── */
+
+        /* ══════════════════════════════════════════════════════════════
+           ⬆️  SCROLL TO TOP BUTTON
+           Hidden until user scrolls 400px down (JS controls display)
+        ══════════════════════════════════════════════════════════════ */
         #scroll-top {
             display: none;
             position: fixed;
@@ -152,22 +191,32 @@
         }
         #scroll-top:hover { background: var(--gold); transform: translateY(-2px); }
 
-        /* ── LAYOUT WRAPPER ── */
+
+        /* ══════════════════════════════════════════════════════════════
+           📐 LAYOUT WRAPPER
+           All page content sits inside max-width 900px centered wrapper
+        ══════════════════════════════════════════════════════════════ */
         .page-wrap {
             max-width: 900px;
             margin: 0 auto;
             padding: 0 2rem;
         }
 
-        /* ── HOME ── */
+
+        /* ══════════════════════════════════════════════════════════════
+           🏠 HOME SECTION
+        ══════════════════════════════════════════════════════════════ */
+
+        /* Full viewport height layout so hero fills the screen */
         .home-layout {
-            min-height: calc(100vh - 61px);
+            min-height: calc(100vh - 61px); /* 61px = header height */
             display: flex;
             flex-direction: column;
             justify-content: center;
             padding: 5rem 0 4rem;
         }
 
+        /* Small gold label above the name e.g. "SQL Developer · Backend Engineer" */
         .home-overline {
             font-size: 0.72rem;
             font-weight: 600;
@@ -179,6 +228,7 @@
             align-items: center;
             gap: 0.7rem;
         }
+        /* Short horizontal line before the overline text */
         .home-overline::before {
             content: '';
             display: inline-block;
@@ -186,15 +236,17 @@
             background: var(--gold);
         }
 
+        /* Main name heading — fluid size using clamp() */
         .home-name {
             font-family: 'Playfair Display', serif;
-            font-size: clamp(2.6rem, 6vw, 4.2rem);
+            font-size: clamp(2.6rem, 6vw, 4.2rem); /* min 2.6rem, max 4.2rem */
             font-weight: 700;
             color: var(--indigo);
             line-height: 1.08;
             letter-spacing: -0.01em;
         }
 
+        /* Subtitle line under the name */
         .home-title {
             font-size: clamp(0.9rem, 2vw, 1.05rem);
             color: var(--muted);
@@ -204,6 +256,7 @@
             line-height: 1.7;
         }
 
+        /* Gold horizontal rule — decorative divider in hero */
         .home-divider {
             width: 48px;
             height: 2px;
@@ -211,6 +264,7 @@
             margin: 2rem 0;
         }
 
+        /* Short paragraph describing current role */
         .home-desc {
             font-size: 0.95rem;
             color: var(--muted);
@@ -220,6 +274,7 @@
         }
         .home-desc strong { color: var(--ink); font-weight: 600; }
 
+        /* CTA button row */
         .home-actions {
             display: flex;
             flex-wrap: wrap;
@@ -227,6 +282,7 @@
             margin-top: 2.5rem;
         }
 
+        /* Primary filled button */
         .btn-primary {
             display: inline-flex;
             align-items: center;
@@ -244,10 +300,9 @@
             text-decoration: none;
             transition: background 0.2s, color 0.2s, border-color 0.2s;
         }
-        .btn-primary:hover {
-            background: var(--gold);
-            border-color: var(--gold);
-        }
+        .btn-primary:hover { background: var(--gold); border-color: var(--gold); }
+
+        /* Ghost / outline button */
         .btn-ghost {
             display: inline-flex;
             align-items: center;
@@ -265,12 +320,9 @@
             text-decoration: none;
             transition: border-color 0.2s, color 0.2s, background 0.2s;
         }
-        .btn-ghost:hover {
-            border-color: var(--indigo);
-            background: var(--indigo);
-            color: white;
-        }
+        .btn-ghost:hover { border-color: var(--indigo); background: var(--indigo); color: white; }
 
+        /* Contact strip at bottom of hero — email, LinkedIn, GitHub, phone */
         .home-contact-strip {
             display: flex;
             flex-wrap: wrap;
@@ -292,10 +344,14 @@
         .strip-link i { font-size: 0.75rem; color: var(--gold); }
         .strip-link:hover { color: var(--indigo); }
 
-        /* ── SECTION HEADER ── */
-        .section-wrap {
-            padding: 4rem 0 5rem;
-        }
+
+        /* ══════════════════════════════════════════════════════════════
+           📋 SECTION HEADER COMPONENTS
+           Reused at the top of Experience, Projects, Education, About
+        ══════════════════════════════════════════════════════════════ */
+        .section-wrap { padding: 4rem 0 5rem; }
+
+        /* Small uppercase gold label e.g. "Work History" */
         .section-overline {
             font-size: 0.7rem;
             font-weight: 600;
@@ -304,6 +360,8 @@
             color: var(--gold);
             margin-bottom: 0.6rem;
         }
+
+        /* Section main heading in Playfair */
         .section-title {
             font-family: 'Playfair Display', serif;
             font-size: 2rem;
@@ -311,19 +369,27 @@
             color: var(--indigo);
             line-height: 1.15;
         }
+
+        /* Short gold bar below the section title */
         .section-rule {
             width: 36px; height: 2px;
             background: var(--gold);
             margin: 1rem 0 2.5rem;
         }
 
-        /* ── EXPERIENCE ── */
+
+        /* ══════════════════════════════════════════════════════════════
+           💼 EXPERIENCE SECTION
+        ══════════════════════════════════════════════════════════════ */
+
+        /* Each job block separated by a top/bottom border */
         .exp-item {
             padding: 2rem 0;
             border-bottom: 1px solid var(--border);
         }
         .exp-item:first-child { border-top: 1px solid var(--border); }
 
+        /* Row with job title (left) and date (right) */
         .exp-meta {
             display: flex;
             flex-wrap: wrap;
@@ -337,6 +403,7 @@
             font-size: 1.15rem;
             color: var(--indigo);
         }
+        /* Gold date badge */
         .exp-period {
             font-size: 0.75rem;
             font-weight: 600;
@@ -351,6 +418,8 @@
             margin-bottom: 1rem;
             font-weight: 500;
         }
+
+        /* Bullet list using em dash instead of dots */
         .exp-points { list-style: none; }
         .exp-points li {
             font-size: 0.88rem;
@@ -367,6 +436,8 @@
             font-size: 0.7rem;
             top: 0.35rem;
         }
+
+        /* Technology tags below each job */
         .tag-row { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1rem; }
         .tag {
             font-size: 0.68rem;
@@ -379,7 +450,12 @@
             border-radius: 2px;
         }
 
-        /* ── PROJECTS ── */
+
+        /* ══════════════════════════════════════════════════════════════
+           🛠️ PROJECTS SECTION
+        ══════════════════════════════════════════════════════════════ */
+
+        /* Divider label between Company and Personal project groups */
         .proj-group-label {
             font-size: 0.7rem;
             font-weight: 600;
@@ -391,6 +467,7 @@
             align-items: center;
             gap: 0.7rem;
         }
+        /* Horizontal line after the group label */
         .proj-group-label::after {
             content: '';
             flex: 1;
@@ -398,6 +475,7 @@
             background: var(--border);
         }
 
+        /* Individual project card */
         .proj-card {
             background: var(--white);
             border: 1px solid var(--border);
@@ -410,6 +488,8 @@
             box-shadow: 0 4px 20px rgba(46,50,103,0.08);
             border-color: #C8C8D8;
         }
+
+        /* Row: project name (left) + GitHub link or "College project" note (right) */
         .proj-card-head {
             display: flex;
             align-items: flex-start;
@@ -422,6 +502,7 @@
             font-size: 1rem;
             color: var(--indigo);
         }
+        /* Italic note for college projects without public code */
         .proj-note {
             font-size: 0.7rem;
             color: var(--muted);
@@ -429,6 +510,8 @@
             white-space: nowrap;
             margin-top: 3px;
         }
+
+        /* GitHub "Code" button on project cards that have a public repo */
         .github-link {
             display: inline-flex;
             align-items: center;
@@ -447,12 +530,16 @@
             flex-shrink: 0;
         }
         .github-link:hover { background: var(--indigo); color: white; border-color: var(--indigo); }
+
+        /* Short project description text */
         .proj-desc {
             font-size: 0.83rem;
             color: var(--muted);
             margin: 0.6rem 0 0.8rem;
             line-height: 1.65;
         }
+
+        /* Project bullet points (same em dash style as experience) */
         .proj-points { list-style: none; }
         .proj-points li {
             font-size: 0.83rem;
@@ -469,6 +556,8 @@
             font-size: 0.65rem;
             top: 0.32rem;
         }
+
+        /* Tech stack tags below each project (lighter style than exp tags) */
         .stack-row { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.9rem; }
         .stack-tag {
             font-size: 0.67rem;
@@ -482,13 +571,25 @@
             border-radius: 2px;
         }
 
-        /* ── EDUCATION & SKILLS ── */
-        .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 4px; overflow: hidden; }
-        @media (max-width: 580px) { .edu-grid { grid-template-columns: 1fr; } }
-        .edu-cell {
-            background: var(--white);
-            padding: 1.4rem 1.6rem;
+
+        /* ══════════════════════════════════════════════════════════════
+           🎓 EDUCATION & SKILLS SECTION
+        ══════════════════════════════════════════════════════════════ */
+
+        /* 2-column grid for education entries.
+           Collapses to 1 column on screens below 580px */
+        .edu-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1px;                  /* creates thin border lines between cells */
+            background: var(--border); /* border color shows through the 1px gaps */
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            overflow: hidden;
         }
+        @media (max-width: 580px) { .edu-grid { grid-template-columns: 1fr; } }
+
+        .edu-cell { background: var(--white); padding: 1.4rem 1.6rem; }
         .edu-degree {
             font-family: 'Playfair Display', serif;
             font-size: 0.95rem;
@@ -499,8 +600,11 @@
         .edu-meta { font-size: 0.75rem; color: var(--muted); }
         .edu-meta strong { color: var(--indigo); }
 
+        /* Skills grid below education */
         .skills-block { margin-top: 2.5rem; }
         .skill-category { margin-bottom: 1.6rem; }
+
+        /* Gold category label e.g. "Databases & SQL" */
         .skill-cat-label {
             font-size: 0.68rem;
             font-weight: 700;
@@ -510,6 +614,8 @@
             margin-bottom: 0.6rem;
         }
         .skill-chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+        /* Individual skill chip — bordered rectangle */
         .skill-chip {
             font-size: 0.8rem;
             color: var(--ink);
@@ -521,11 +627,21 @@
             transition: border-color 0.2s, color 0.2s;
         }
         .skill-chip:hover { border-color: var(--indigo); color: var(--indigo); }
-        .skill-chip.learning { color: var(--muted); font-style: italic; }
 
-        /* ── CERTIFICATIONS ── */
-        .cert-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2.5rem; }
+
+        /* ══════════════════════════════════════════════════════════════
+           📜 CERTIFICATIONS
+        ══════════════════════════════════════════════════════════════ */
+
+        /* 2-column grid, collapses at 560px */
+        .cert-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 2.5rem;
+        }
         @media (max-width: 560px) { .cert-grid { grid-template-columns: 1fr; } }
+
         .cert-card {
             background: var(--white);
             border: 1px solid var(--border);
@@ -534,6 +650,10 @@
             transition: border-color 0.2s, box-shadow 0.2s;
         }
         .cert-card:hover { border-color: #C8C8D8; box-shadow: 0 2px 12px rgba(46,50,103,0.06); }
+
+        /* .full spans both columns — used for Accenture cert */
+        .cert-card.full { grid-column: 1 / -1; }
+
         .cert-name {
             font-size: 0.88rem;
             font-weight: 600;
@@ -541,6 +661,8 @@
             margin-bottom: 0.2rem;
         }
         .cert-issuer { font-size: 0.75rem; color: var(--muted); margin-bottom: 0.7rem; }
+
+        /* "View Certificate" link in gold */
         .cert-link {
             display: inline-flex;
             align-items: center;
@@ -555,11 +677,21 @@
         }
         .cert-link:hover { color: var(--indigo); }
         .cert-links { display: flex; flex-wrap: wrap; gap: 0.7rem; }
-        .cert-card.full { grid-column: 1 / -1; }
 
-        /* ── ABOUT ── */
-        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.5rem; }
+
+        /* ══════════════════════════════════════════════════════════════
+           👤 ABOUT SECTION
+        ══════════════════════════════════════════════════════════════ */
+
+        /* 2-column grid for Interests and Languages blocks */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
         @media (max-width: 560px) { .about-grid { grid-template-columns: 1fr; } }
+
         .about-block {
             background: var(--white);
             border: 1px solid var(--border);
@@ -575,9 +707,20 @@
             margin-bottom: 0.8rem;
         }
 
-        /* Contact cards */
-        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 4px; overflow: hidden; margin-top: 2rem; }
+        /* Contact cards — grid with 1px borders between cells */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 2rem;
+        }
         @media (max-width: 560px) { .contact-grid { grid-template-columns: 1fr; } }
+
+        /* Each contact entry is a full clickable anchor */
         .contact-cell {
             background: var(--white);
             padding: 1.2rem 1.5rem;
@@ -588,21 +731,33 @@
             transition: background 0.2s;
         }
         .contact-cell:hover { background: #F7F7F4; }
+
+        /* Square icon box on the left of each contact item */
         .contact-cell-icon {
             width: 36px; height: 36px;
             background: #EEEEF7;
             border-radius: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             color: var(--indigo);
             font-size: 0.85rem;
             flex-shrink: 0;
         }
-        .contact-cell-label { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
-        .contact-cell-value { font-size: 0.82rem; color: var(--indigo); font-weight: 500; margin-top: 1px; word-break: break-all; }
+        .contact-cell-label {
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+        .contact-cell-value {
+            font-size: 0.82rem;
+            color: var(--indigo);
+            font-weight: 500;
+            margin-top: 1px;
+            word-break: break-all; /* prevents email overflow on narrow screens */
+        }
 
-        /* Interest & Lang pills */
+        /* Interest list items with gold dot prefix */
         .interest-item {
             display: inline-flex;
             align-items: center;
@@ -612,6 +767,8 @@
             padding: 0.3rem 0;
         }
         .interest-item::before { content: '·'; color: var(--gold); font-size: 1.1rem; line-height: 1; }
+
+        /* Language badges */
         .lang-badge {
             display: inline-block;
             font-size: 0.78rem;
@@ -623,7 +780,11 @@
             margin: 0.2rem;
         }
 
-        /* ── BACK BTN ── */
+
+        /* ══════════════════════════════════════════════════════════════
+           ← BACK BUTTON
+           Appears at the bottom of each section to return to Home
+        ══════════════════════════════════════════════════════════════ */
         .back-btn {
             display: inline-flex;
             align-items: center;
@@ -642,24 +803,46 @@
         }
         .back-btn:hover { color: var(--indigo); border-color: var(--indigo); background: var(--white); }
 
-        /* ── RESPONSIVE ── */
+
+        /* ══════════════════════════════════════════════════════════════
+           📱 MOBILE PADDING OVERRIDES
+        ══════════════════════════════════════════════════════════════ */
         @media (max-width: 640px) {
             .page-wrap { padding: 0 1.25rem; }
+            /* Reduce hero padding on small screens so it fits without scrolling */
             .home-layout { padding: 3rem 0 3rem; min-height: auto; }
         }
+
     </style>
 </head>
 <body>
 
+<!-- ── SCROLL TO TOP BUTTON ──────────────────────────────────────────────
+     Shown after user scrolls 400px. Clicking it calls scrollTo(0).
+     JS at bottom controls display property.
+──────────────────────────────────────────────────────────────────────── -->
 <button id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'});">
     <i class="fas fa-arrow-up"></i>
 </button>
 
-<!-- HEADER -->
+
+<!-- ── SITE HEADER ──────────────────────────────────────────────────────
+     Sticky header with logo + desktop nav + mobile hamburger.
+     Both desktop (.desktop-nav) and mobile (#mobile-menu) nav links
+     share the same .nav-btn class and data-target attributes.
+     JS reads data-target to know which section to show.
+──────────────────────────────────────────────────────────────────────── -->
 <header id="site-header">
     <div class="header-inner">
+        <!-- Logo -->
         <div class="logo">Chandan<span>.</span></div>
-        <button class="mobile-toggle" id="menu-toggle"><i class="fas fa-bars"></i></button>
+
+        <!-- Hamburger button — only visible on mobile (CSS handles this) -->
+        <button class="mobile-toggle" id="menu-toggle">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Desktop nav links -->
         <nav class="desktop-nav">
             <button class="nav-btn active" data-target="home">Home</button>
             <button class="nav-btn" data-target="experience">Experience</button>
@@ -668,6 +851,8 @@
             <button class="nav-btn" data-target="about">About</button>
         </nav>
     </div>
+
+    <!-- Mobile dropdown menu — hidden until hamburger clicked -->
     <div id="mobile-menu">
         <button class="nav-btn active" data-target="home">Home</button>
         <button class="nav-btn" data-target="experience">Experience</button>
@@ -677,429 +862,580 @@
     </div>
 </header>
 
+
+<!-- ── PAGE WRAPPER ─────────────────────────────────────────────────────
+     All section content lives inside this centered max-width container.
+──────────────────────────────────────────────────────────────────────── -->
 <div class="page-wrap">
 
-<!-- ═══ HOME ═══ -->
-<section id="home" class="page-section active">
-    <div class="home-layout">
-        <div class="home-overline">SQL Developer · Backend Engineer</div>
 
-        <h1 class="home-name">
-            Sahukari<br>Chandan Chowdary
-        </h1>
+    <!-- ══════════════════════════════════════════════════════════════════
+         🏠 HOME SECTION
+         id="home" — shown by default on load (JS sets this active)
+    ══════════════════════════════════════════════════════════════════ -->
+    <section id="home" class="page-section active">
+        <div class="home-layout">
 
-        <p class="home-title">
-            Building reliable backend systems and optimized data layers<br>
-            for enterprise HRMS applications.
-        </p>
+            <!-- Role label with gold line prefix -->
+            <div class="home-overline">SQL Developer · Backend Engineer</div>
 
-        <div class="home-divider"></div>
+            <!-- Name — two lines for visual weight -->
+            <h1 class="home-name">
+                Sahukari<br>Chandan Chowdary
+            </h1>
 
-        <p class="home-desc">
-            Currently at <strong>OASYS Cybernetics</strong>, Chennai — designing SQL solutions,
-            integrating APIs, and supporting full product development cycles.
-            Background in machine learning. Expanding into <strong>Power BI</strong>.
-        </p>
+            <!-- One-liner subtitle -->
+            <p class="home-title">
+                Building reliable backend systems and optimized data layers<br>
+                for enterprise HRMS, LMS (learning Management System) & Project Management applications.
+            </p>
 
-        <div class="home-actions">
-            <button class="btn-primary nav-btn" data-target="projects">View Projects</button>
-            <button class="btn-primary nav-btn" data-target="experience">Experience</button>
-            <a href="Chandan_Chowdary_Resume.pdf" download class="btn-ghost"><i class="fas fa-download"></i> Resume</a>
+            <!-- Gold rule divider -->
+            <div class="home-divider"></div>
+
+            <!-- Short current role description -->
+            <p class="home-desc">
+                Currently at <strong>OASYS Cybernetics</strong>, Chennai — designing SQL solutions,
+                integrating APIs, and supporting full product development cycles.
+                <!-- Background in machine learning. Expanding into <strong>Power BI</strong>. -->
+            </p>
+
+            <!-- CTA buttons: Projects, Experience, Download Resume -->
+            <div class="home-actions">
+                <!-- nav-btn class + data-target triggers section switch via JS -->
+                <button class="btn-primary nav-btn" data-target="projects">View Projects</button>
+                <button class="btn-primary nav-btn" data-target="experience">Experience</button>
+                <!-- Resume download — update filename if you rename the PDF -->
+                <a href="Chandan_Chowdary_Resume.pdf" download class="btn-ghost">
+                    <i class="fas fa-download"></i> Resume
+                </a>
+            </div>
+
+            <!-- Contact strip — quick links at bottom of hero -->
+            <div class="home-contact-strip">
+                <a href="mailto:sahukarichandan2001@gmail.com" class="strip-link">
+                    <i class="fas fa-envelope"></i> sahukarichandan2001@gmail.com
+                </a>
+                <a href="https://linkedin.com/in/chandanchowdary" target="_blank" class="strip-link">
+                    <i class="fab fa-linkedin"></i> LinkedIn
+                </a>
+                <!-- Update this URL if your GitHub username changes -->
+                <a href="https://github.com/chandan-2025" target="_blank" class="strip-link">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+                <a href="tel:+918309443303" class="strip-link">
+                    <i class="fas fa-phone-alt"></i> +91 83094 43303
+                </a>
+            </div>
+
         </div>
+    </section>
 
-        <div class="home-contact-strip">
-            <a href="mailto:sahukarichandan2001@gmail.com" class="strip-link"><i class="fas fa-envelope"></i> sahukarichandan2001@gmail.com</a>
-            <a href="https://linkedin.com/in/chandanchowdary" target="_blank" class="strip-link"><i class="fab fa-linkedin"></i> LinkedIn</a>
-            <a href="https://github.com/chandan-2025" target="_blank" class="strip-link"><i class="fab fa-github"></i> GitHub</a>
-            <a href="tel:+918309443303" class="strip-link"><i class="fas fa-phone-alt"></i> +91 83094 43303</a>
-        </div>
-    </div>
-</section>
 
-<!-- ═══ EXPERIENCE ═══ -->
-<section id="experience" class="page-section">
-    <div class="section-wrap">
-        <div class="section-overline">Work History</div>
-        <h2 class="section-title">Professional Experience</h2>
-        <div class="section-rule"></div>
+    <!-- ══════════════════════════════════════════════════════════════════
+         💼 EXPERIENCE SECTION
+         id="experience" — switched to via nav or Home CTA button
+    ══════════════════════════════════════════════════════════════════ -->
+    <section id="experience" class="page-section">
+        <div class="section-wrap">
 
-        <div class="exp-item">
-            <div class="exp-meta">
-                <div class="exp-role">SQL Developer &amp; Backend Developer</div>
-                <div class="exp-period">Mar 2025 — Present</div>
-            </div>
-            <div class="exp-company">OASYS Cybernetics Pvt. Ltd. · Chennai</div>
-            <ul class="exp-points">
-                <li>Designed and optimized 50+ complex SQL queries across HRMS, LMS, and Project Management modules in a live production environment.</li>
-                <li>Built multi-table joins (up to 6 tables) and targeted indexing strategies, reducing data retrieval time by 20–25% on critical reporting queries.</li>
-                <li>Validated backend API responses using Postman, ensuring accurate data mapping and seamless frontend integration across multiple product modules.</li>
-                <li>Provided backend support for new features, bug fixes, and internal reporting — translating functional requirements into optimized SQL solutions.</li>
-                <li>Collaborated closely with API and UI teams to maintain smooth end-to-end data flow between database and user interface.</li>
-            </ul>
-            <div class="tag-row">
-                <span class="tag">MySQL</span><span class="tag">MariaDB</span><span class="tag">Postman</span><span class="tag">Java Spring</span><span class="tag">React</span><span class="tag">JIRA</span>
-            </div>
-        </div>
+            <div class="section-overline">Work History</div>
+            <h2 class="section-title">Professional Experience</h2>
+            <div class="section-rule"></div>
 
-        <div class="exp-item">
-            <div class="exp-meta">
-                <div class="exp-role">Machine Learning Intern</div>
-                <div class="exp-period">Sept 2021 — Feb 2022</div>
-            </div>
-            <div class="exp-company">OASYS Cybernetics Pvt. Ltd. · Chennai</div>
-            <ul class="exp-points">
-                <li>Assisted in developing ML classification models using Python and Flask, handling data preprocessing and backend API integration for model deployment.</li>
-                <li>Utilized Pandas and NumPy for dataset preparation, model evaluation, and performance improvement.</li>
-                <li>Collaborated with senior developers, learning production coding standards and efficient workflows.</li>
-            </ul>
-            <div class="tag-row">
-                <span class="tag">Python</span><span class="tag">Flask</span><span class="tag">Pandas</span><span class="tag">NumPy</span><span class="tag">Scikit-learn</span>
-            </div>
-        </div>
-
-        <div class="text-center mt-10">
-            <button class="back-btn nav-btn" data-target="home"><i class="fas fa-arrow-left"></i> Back</button>
-        </div>
-    </div>
-</section>
-
-<!-- ═══ PROJECTS ═══ -->
-<section id="projects" class="page-section">
-    <div class="section-wrap">
-        <div class="section-overline">Portfolio</div>
-        <h2 class="section-title">Technical Projects</h2>
-        <div class="section-rule"></div>
-
-        <div class="proj-group-label">Company · Professional</div>
-
-        <div class="proj-card">
-            <div class="proj-card-head">
-                <div class="proj-name">HRMS Database Optimization &amp; Feature Development</div>
-            </div>
-            <div class="proj-desc">SQL Developer / Backend Data Support — MySQL, MariaDB, Postman, Java Spring, React</div>
-            <ul class="proj-points">
-                <li>Maintained the complete SQL layer including queries, views, and stored procedures across screens, dashboards, and workflow components.</li>
-                <li>Optimized data retrieval by applying indexing and refining JOIN logic — improving load performance by 20–25%.</li>
-                <li>Verified backend-to-frontend data accuracy via Postman; supported UI/API teams with data mapping and integration.</li>
-                <li>Implemented reusable SQL views and clean logic to maintain consistency and integrity across all HRMS modules.</li>
-            </ul>
-            <div class="stack-row">
-                <span class="stack-tag">MySQL</span><span class="stack-tag">MariaDB</span><span class="stack-tag">Postman</span><span class="stack-tag">React</span><span class="stack-tag">Java Spring</span>
-            </div>
-        </div>
-
-        <div class="proj-card">
-            <div class="proj-card-head">
-                <div class="proj-name">Training Portal Microservice — Backend Data Support</div>
-            </div>
-            <div class="proj-desc">SQL Developer / Backend Data Support — MySQL, MariaDB, Postman, FTP, React</div>
-            <ul class="proj-points">
-                <li>Managed course content (videos, images) to production servers via FTP.</li>
-                <li>Built SQL queries and views to fetch course data, track user progress, and display instructor ratings.</li>
-                <li>Validated API responses via Postman; collaborated with frontend and QA teams throughout development and deployment.</li>
-            </ul>
-            <div class="stack-row">
-                <span class="stack-tag">MySQL</span><span class="stack-tag">MariaDB</span><span class="stack-tag">Postman</span><span class="stack-tag">FTP</span><span class="stack-tag">React</span>
-            </div>
-        </div>
-
-        <div class="proj-group-label">Personal &amp; Academic</div>
-
-        <div class="proj-card">
-            <div class="proj-card-head">
-                <div class="proj-name">Flask Mechanic Shop Management System</div>
-                <a href="https://github.com/chandan-2025/flask_shop_personal" target="_blank" class="github-link"><i class="fab fa-github"></i> Code</a>
-            </div>
-            <div class="proj-desc">Full-stack web application managing appointments, customer data, and admin workflows.</div>
-            <ul class="proj-points">
-                <li>Secure authentication via Flask-Login with admin-only CRUD operations.</li>
-                <li>Daily appointment limit enforcement to prevent overbooking.</li>
-                <li>Excel export using Pandas for admin reporting and data analysis.</li>
-            </ul>
-            <div class="stack-row">
-                <span class="stack-tag">Python</span><span class="stack-tag">Flask</span><span class="stack-tag">SQLAlchemy</span><span class="stack-tag">SQLite</span><span class="stack-tag">Pandas</span><span class="stack-tag">Jinja2</span>
-            </div>
-        </div>
-
-        <div class="proj-card">
-            <div class="proj-card-head">
-                <div class="proj-name">Car Price Prediction</div>
-                <span class="proj-note">College project</span>
-            </div>
-            <div class="proj-desc">Regression-based Streamlit app for real-time car price prediction from user inputs.</div>
-            <ul class="proj-points">
-                <li>Feature engineering and model evaluation using Pandas and Scikit-learn.</li>
-                <li>Interactive Streamlit UI for live price estimation.</li>
-            </ul>
-            <div class="stack-row">
-                <span class="stack-tag">Python</span><span class="stack-tag">Streamlit</span><span class="stack-tag">Pandas</span><span class="stack-tag">Scikit-learn</span>
-            </div>
-        </div>
-
-        <div class="proj-card">
-            <div class="proj-card-head">
-                <div class="proj-name">Phish Catcher — URL Phishing Detector</div>
-                <span class="proj-note">College project</span>
-            </div>
-            <div class="proj-desc">Real-time phishing URL detection using an ensemble ML model deployed via Flask.</div>
-            <ul class="proj-points">
-                <li>SVM + XGBoost ensemble achieving <strong>90% classification accuracy</strong>.</li>
-                <li>URL feature extraction pipeline for robust and reliable detection.</li>
-            </ul>
-            <div class="stack-row">
-                <span class="stack-tag">Python</span><span class="stack-tag">Flask</span><span class="stack-tag">XGBoost</span><span class="stack-tag">SVM</span><span class="stack-tag">Scikit-learn</span>
-            </div>
-        </div>
-
-        <div class="proj-card">
-            <div class="proj-card-head">
-                <div class="proj-name">Fraud Detection in Medical Insurance</div>
-                <span class="proj-note">College project</span>
-            </div>
-            <div class="proj-desc">Flask web app for detecting fraudulent insurance claims with real-time predictions.</div>
-            <ul class="proj-points">
-                <li>SVM with GridSearchCV achieving <strong>92% model accuracy</strong>.</li>
-                <li>Confusion matrix validation to ensure model robustness and reliability.</li>
-            </ul>
-            <div class="stack-row">
-                <span class="stack-tag">Python</span><span class="stack-tag">Flask</span><span class="stack-tag">SVM</span><span class="stack-tag">GridSearchCV</span><span class="stack-tag">Bootstrap</span>
-            </div>
-        </div>
-
-        <div class="text-center mt-10">
-            <button class="back-btn nav-btn" data-target="home"><i class="fas fa-arrow-left"></i> Back</button>
-        </div>
-    </div>
-</section>
-
-<!-- ═══ EDUCATION & SKILLS ═══ -->
-<section id="education" class="page-section">
-    <div class="section-wrap">
-        <div class="section-overline">Background</div>
-        <h2 class="section-title">Education &amp; Skills</h2>
-        <div class="section-rule"></div>
-
-        <!-- Education grid -->
-        <div class="edu-grid">
-            <div class="edu-cell">
-                <div class="edu-degree">Master of Computer Applications (MCA)</div>
-                <div class="edu-school">CBIT, Hyderabad</div>
-                <div class="edu-meta">Nov 2022 – Jun 2024 &nbsp;·&nbsp; CGPA <strong>8.57</strong></div>
-            </div>
-            <div class="edu-cell">
-                <div class="edu-degree">B.Sc in Computers</div>
-                <div class="edu-school">Gayatri Vidya Parishad, Visakhapatnam</div>
-                <div class="edu-meta">Jul 2018 – Aug 2021 &nbsp;·&nbsp; CGPA <strong>8.03</strong></div>
-            </div>
-            <div class="edu-cell">
-                <div class="edu-degree">Intermediate (MPC)</div>
-                <div class="edu-school">Swarna Bharathi Junior College, Icchapuram</div>
-                <div class="edu-meta">Jun 2016 – Apr 2018 &nbsp;·&nbsp; <strong>926 / 1000</strong></div>
-            </div>
-            <div class="edu-cell">
-                <div class="edu-degree">SSC</div>
-                <div class="edu-school">Govt. Boys High School, Icchapuram</div>
-                <div class="edu-meta">2015 – 2016 &nbsp;·&nbsp; CGPA <strong>9.0</strong></div>
-            </div>
-        </div>
-
-        <!-- Skills -->
-        <div class="skills-block">
-            <div class="skill-category">
-                <div class="skill-cat-label">Databases &amp; SQL</div>
-                <div class="skill-chips">
-                    <span class="skill-chip">MySQL</span>
-                    <span class="skill-chip">MariaDB</span>
-                    <span class="skill-chip">Query Optimization</span>
-                    <span class="skill-chip">Stored Procedures</span>
-                    <span class="skill-chip">Joins &amp; Views</span>
-                    <span class="skill-chip">Indexing</span>
+            <!-- ── Job 1: Current role ── -->
+            <div class="exp-item">
+                <div class="exp-meta">
+                    <div class="exp-role">SQL Developer &amp; Backend Developer</div>
+                    <div class="exp-period">Mar 2025 — Present</div>
+                </div>
+                <div class="exp-company">OASYS Cybernetics Pvt. Ltd. · Chennai</div>
+                <ul class="exp-points">
+                    <li>Designed and optimized 50+ complex SQL queries across HRMS, LMS, and Project Management modules in a live production environment.</li>
+                    <li>Built multi-table joins (up to 6 tables) and targeted indexing strategies, reducing data retrieval time by 20–25% on critical reporting queries.</li>
+                    <li>Validated backend API responses using Postman, ensuring accurate data mapping and seamless frontend integration across multiple product modules.</li>
+                    <li>Provided backend support for new features, bug fixes, and internal reporting — translating functional requirements into optimized SQL solutions.</li>
+                    <li>Collaborated closely with API and UI teams to maintain smooth end-to-end data flow between database and user interface.</li>
+                </ul>
+                <div class="tag-row">
+                    <span class="tag">MySQL</span>
+                    <span class="tag">MariaDB</span>
+                    <span class="tag">Postman</span>
+                    <span class="tag">Java Spring</span>
+                    <span class="tag">React</span>
+                    <span class="tag">JIRA</span>
                 </div>
             </div>
-            <div class="skill-category">
-                <div class="skill-cat-label">Backend &amp; Programming</div>
-                <div class="skill-chips">
-                    <span class="skill-chip">Python</span>
-                    <span class="skill-chip">Flask</span>
-                    <span class="skill-chip">REST APIs</span>
-                    <span class="skill-chip">Java</span>
-                    <span class="skill-chip">C</span>
-                    <span class="skill-chip">Streamlit</span>
+
+            <!-- ── Job 2: Internship ── -->
+            <div class="exp-item">
+                <div class="exp-meta">
+                    <div class="exp-role">Machine Learning Intern</div>
+                    <div class="exp-period">Sept 2021 — Feb 2022</div>
+                </div>
+                <div class="exp-company">OASYS Cybernetics Pvt. Ltd. · Chennai</div>
+                <ul class="exp-points">
+                    <li>Assisted in developing ML classification models using Python and Flask, handling data preprocessing and backend API integration for model deployment.</li>
+                    <li>Utilized Pandas and NumPy for dataset preparation, model evaluation, and performance improvement.</li>
+                    <li>Collaborated with senior developers, learning production coding standards and efficient workflows.</li>
+                </ul>
+                <div class="tag-row">
+                    <span class="tag">Python</span>
+                    <span class="tag">Flask</span>
+                    <span class="tag">Pandas</span>
+                    <span class="tag">NumPy</span>
+                    <span class="tag">Scikit-learn</span>
                 </div>
             </div>
-            <div class="skill-category">
-                <div class="skill-cat-label">Tools &amp; Workflow</div>
-                <div class="skill-chips">
-                    <span class="skill-chip">Postman</span>
-                    <span class="skill-chip">Git</span>
-                    <span class="skill-chip">GitHub</span>
-                    <span class="skill-chip">JIRA</span>
-                    <span class="skill-chip">FTP</span>
-                </div>
-            </div>
-            <div class="skill-category">
-                <div class="skill-cat-label">ML &amp; Data</div>
-                <div class="skill-chips">
-                    <span class="skill-chip">Pandas</span>
-                    <span class="skill-chip">NumPy</span>
-                    <span class="skill-chip">Scikit-learn</span>
-                    <span class="skill-chip">XGBoost</span>
-                    <span class="skill-chip">SVM</span>
-                    <span class="skill-chip">Power BI <em style="font-size:0.7rem; color:var(--muted)">(learning)</em></span>
-                </div>
+
+            <div class="text-center mt-10">
+                <!-- back-btn + nav-btn + data-target="home" = goes back to home -->
+                <button class="back-btn nav-btn" data-target="home">
+                    <i class="fas fa-arrow-left"></i> Back
+                </button>
             </div>
         </div>
+    </section>
 
-        <!-- Certifications -->
-        <div style="margin-top:3rem">
-            <div class="section-overline">Verified</div>
-            <h3 class="serif" style="font-size:1.3rem; color:var(--indigo); margin-bottom:0.5rem">Certifications</h3>
-            <div style="width:28px;height:2px;background:var(--gold);margin-bottom:0"></div>
-        </div>
 
-        <div class="cert-grid">
-            <div class="cert-card">
-                <div class="cert-name">Python Programming</div>
-                <div class="cert-issuer">HackerRank &amp; Coding Ninjas</div>
-                <a href="https://www.hackerrank.com/certificates/iframe/fb5b1f48803a" target="_blank" class="cert-link"><i class="fas fa-external-link-alt"></i> View Certificate</a>
-            </div>
-            <div class="cert-card">
-                <div class="cert-name">Problem Solving — Basic</div>
-                <div class="cert-issuer">HackerRank · CodeChef Silver Badge</div>
-                <a href="https://www.hackerrank.com/certificates/770d03b5f48f" target="_blank" class="cert-link"><i class="fas fa-external-link-alt"></i> View Certificate</a>
-            </div>
-            <div class="cert-card">
-                <div class="cert-name">SQL Certification</div>
-                <div class="cert-issuer">HackerRank — Queries, Joins &amp; Data Manipulation</div>
-                <div class="cert-links">
-                    <a href="https://www.hackerrank.com/certificates/iframe/c26e89b20ce5" target="_blank" class="cert-link"><i class="fas fa-external-link-alt"></i> Certificate 1</a>
-                    <a href="https://www.hackerrank.com/certificates/iframe/ba9a3e0976f3" target="_blank" class="cert-link"><i class="fas fa-external-link-alt"></i> Certificate 2</a>
+    <!-- ══════════════════════════════════════════════════════════════════
+         🛠️ PROJECTS SECTION
+         Split into two groups: Company/Professional and Personal/Academic
+    ══════════════════════════════════════════════════════════════════ -->
+    <section id="projects" class="page-section">
+        <div class="section-wrap">
+
+            <div class="section-overline">Portfolio</div>
+            <h2 class="section-title">Technical Projects</h2>
+            <div class="section-rule"></div>
+
+            <!-- ── GROUP 1: Company / Professional ── -->
+            <div class="proj-group-label">Company · Professional</div>
+
+            <!-- Project: HRMS -->
+            <div class="proj-card">
+                <div class="proj-card-head">
+                    <div class="proj-name">HRMS Database Optimization &amp; Feature Development</div>
+                </div>
+                <div class="proj-desc">SQL Developer / Backend Data Support — MySQL, MariaDB, Postman, Java Spring, React</div>
+                <ul class="proj-points">
+                    <li>Maintained the complete SQL layer including queries, views, and stored procedures across screens, dashboards, and workflow components.</li>
+                    <li>Optimized data retrieval by applying indexing and refining JOIN logic — improving load performance by 20–25%.</li>
+                    <li>Verified backend-to-frontend data accuracy via Postman; supported UI/API teams with data mapping and integration.</li>
+                    <li>Implemented reusable SQL views and clean logic to maintain consistency and integrity across all HRMS modules.</li>
+                </ul>
+                <div class="stack-row">
+                    <span class="stack-tag">MySQL</span>
+                    <span class="stack-tag">MariaDB</span>
+                    <span class="stack-tag">Postman</span>
+                    <span class="stack-tag">React</span>
+                    <span class="stack-tag">Java Spring</span>
                 </div>
             </div>
-            <div class="cert-card">
-                <div class="cert-name">Java Basic Certification</div>
-                <div class="cert-issuer">HackerRank — Java Programming Fundamentals</div>
-                <a href="https://www.hackerrank.com/certificates/iframe/c422db58c14d" target="_blank" class="cert-link"><i class="fas fa-external-link-alt"></i> View Certificate</a>
-            </div>
-            <div class="cert-card full">
-                <div class="cert-name">Accenture Developer Virtual Experience Programme</div>
-                <div class="cert-issuer">Simulated professional development environment — practical skills in a real-world project context</div>
-            </div>
-        </div>
 
-        <div class="text-center mt-10">
-            <button class="back-btn nav-btn" data-target="home"><i class="fas fa-arrow-left"></i> Back</button>
-        </div>
-    </div>
-</section>
-
-<!-- ═══ ABOUT ═══ -->
-<section id="about" class="page-section">
-    <div class="section-wrap">
-        <div class="section-overline">The Person</div>
-        <h2 class="section-title">About Me</h2>
-        <div class="section-rule"></div>
-
-        <p style="font-size:0.95rem; color:var(--muted); max-width:560px; line-height:1.8; font-weight:300">
-            SQL Developer with hands-on production experience in enterprise HRMS and LMS systems.
-            I care about clean data logic, fast queries, and software that actually works reliably at scale.
-            Alongside SQL work, I've built ML-powered Flask applications and I'm currently learning Power BI
-            to round out my data skill set.
-        </p>
-
-        <div class="about-grid">
-            <div class="about-block">
-                <div class="about-block-label">Interests &amp; Hobbies</div>
-                <div style="display:flex; flex-direction:column;">
-                    <span class="interest-item">Reading novels &amp; non-fiction</span>
-                    <span class="interest-item">Tech &amp; productivity podcasts</span>
-                    <span class="interest-item">Playing sports</span>
-                    <span class="interest-item">Exploring new places</span>
+            <!-- Project: Training Portal -->
+            <div class="proj-card">
+                <div class="proj-card-head">
+                    <div class="proj-name">Training Portal Microservice — Backend Data Support</div>
+                </div>
+                <div class="proj-desc">SQL Developer / Backend Data Support — MySQL, MariaDB, Postman, FTP, React</div>
+                <ul class="proj-points">
+                    <li>Managed course content (videos, images) to production servers via FTP.</li>
+                    <li>Built SQL queries and views to fetch course data, track user progress, and display instructor ratings.</li>
+                    <li>Validated API responses via Postman; collaborated with frontend and QA teams throughout development and deployment.</li>
+                </ul>
+                <div class="stack-row">
+                    <span class="stack-tag">MySQL</span>
+                    <span class="stack-tag">MariaDB</span>
+                    <span class="stack-tag">Postman</span>
+                    <span class="stack-tag">FTP</span>
+                    <span class="stack-tag">React</span>
                 </div>
             </div>
-            <div class="about-block">
-                <div class="about-block-label">Languages</div>
-                <div>
-                    <span class="lang-badge">English</span>
-                    <span class="lang-badge">Telugu</span>
-                    <span class="lang-badge">Hindi</span>
-                    <span class="lang-badge">Oriya</span>
+
+            <!-- ── GROUP 2: Personal / Academic ── -->
+            <div class="proj-group-label">Personal &amp; Academic</div>
+
+            <!-- Project: Flask Shop — has GitHub link -->
+            <div class="proj-card">
+                <div class="proj-card-head">
+                    <div class="proj-name">Flask Mechanic Shop Management System</div>
+                    <!-- Update href if repo URL changes -->
+                    <a href="https://github.com/chandan-2025/flask_shop_personal" target="_blank" class="github-link">
+                        <i class="fab fa-github"></i> Code
+                    </a>
                 </div>
-                <div style="margin-top:1.2rem">
-                    <div class="about-block-label">Based in</div>
-                    <span style="font-size:0.85rem; color:var(--ink);">Chennai, Tamil Nadu, India</span>
+                <div class="proj-desc">Full-stack web application managing appointments, customer data, and admin workflows.</div>
+                <ul class="proj-points">
+                    <li>Secure authentication via Flask-Login with admin-only CRUD operations.</li>
+                    <li>Daily appointment limit enforcement to prevent overbooking.</li>
+                    <li>Excel export using Pandas for admin reporting and data analysis.</li>
+                </ul>
+                <div class="stack-row">
+                    <span class="stack-tag">Python</span>
+                    <span class="stack-tag">Flask</span>
+                    <span class="stack-tag">SQLAlchemy</span>
+                    <span class="stack-tag">SQLite</span>
+                    <span class="stack-tag">Pandas</span>
+                    <span class="stack-tag">Jinja2</span>
                 </div>
             </div>
+
+            <!-- Project: Car Price — college, no public code -->
+            <div class="proj-card">
+                <div class="proj-card-head">
+                    <div class="proj-name">Car Price Prediction</div>
+                    <span class="proj-note">College project</span>
+                </div>
+                <div class="proj-desc">Regression-based Streamlit app for real-time car price prediction from user inputs.</div>
+                <ul class="proj-points">
+                    <li>Feature engineering and model evaluation using Pandas and Scikit-learn.</li>
+                    <li>Interactive Streamlit UI for live price estimation.</li>
+                </ul>
+                <div class="stack-row">
+                    <span class="stack-tag">Python</span>
+                    <span class="stack-tag">Streamlit</span>
+                    <span class="stack-tag">Pandas</span>
+                    <span class="stack-tag">Scikit-learn</span>
+                </div>
+            </div>
+
+            <!-- Project: Phish Catcher — college, no public code -->
+            <div class="proj-card">
+                <div class="proj-card-head">
+                    <div class="proj-name">Phish Catcher — URL Phishing Detector</div>
+                    <span class="proj-note">College project</span>
+                </div>
+                <div class="proj-desc">Real-time phishing URL detection using an ensemble ML model deployed via Flask.</div>
+                <ul class="proj-points">
+                    <li>SVM + XGBoost ensemble achieving <strong>90% classification accuracy</strong>.</li>
+                    <li>URL feature extraction pipeline for robust and reliable detection.</li>
+                </ul>
+                <div class="stack-row">
+                    <span class="stack-tag">Python</span>
+                    <span class="stack-tag">Flask</span>
+                    <span class="stack-tag">XGBoost</span>
+                    <span class="stack-tag">SVM</span>
+                    <span class="stack-tag">Scikit-learn</span>
+                </div>
+            </div>
+
+            <!-- Project: Fraud Detection — college, no public code -->
+            <div class="proj-card">
+                <div class="proj-card-head">
+                    <div class="proj-name">Fraud Detection in Medical Insurance</div>
+                    <span class="proj-note">College project</span>
+                </div>
+                <div class="proj-desc">Flask web app for detecting fraudulent insurance claims with real-time predictions.</div>
+                <ul class="proj-points">
+                    <li>SVM with GridSearchCV achieving <strong>92% model accuracy</strong>.</li>
+                    <li>Confusion matrix validation to ensure model robustness and reliability.</li>
+                </ul>
+                <div class="stack-row">
+                    <span class="stack-tag">Python</span>
+                    <span class="stack-tag">Flask</span>
+                    <span class="stack-tag">SVM</span>
+                    <span class="stack-tag">GridSearchCV</span>
+                    <span class="stack-tag">Bootstrap</span>
+                </div>
+            </div>
+
+            <div class="text-center mt-10">
+                <button class="back-btn nav-btn" data-target="home">
+                    <i class="fas fa-arrow-left"></i> Back
+                </button>
+            </div>
         </div>
+    </section>
 
-        <!-- Contact -->
-        <div style="margin-top:2.5rem">
-            <div class="section-overline">Get in Touch</div>
-            <h3 class="serif" style="font-size:1.3rem; color:var(--indigo)">Contact &amp; Links</h3>
+
+    <!-- ══════════════════════════════════════════════════════════════════
+         🎓 EDUCATION & SKILLS SECTION
+         Includes: Academic History, Technical Skills, Certifications
+    ══════════════════════════════════════════════════════════════════ -->
+    <section id="education" class="page-section">
+        <div class="section-wrap">
+
+            <div class="section-overline">Background</div>
+            <h2 class="section-title">Education &amp; Skills</h2>
+            <div class="section-rule"></div>
+
+            <!-- ── Education: 2x2 grid of degree entries ── -->
+            <div class="edu-grid">
+                <div class="edu-cell">
+                    <div class="edu-degree">Master of Computer Applications (MCA)</div>
+                    <div class="edu-school">CBIT, Hyderabad</div>
+                    <div class="edu-meta">Nov 2022 – Jun 2024 &nbsp;·&nbsp; CGPA <strong>8.57</strong></div>
+                </div>
+                <div class="edu-cell">
+                    <div class="edu-degree">B.Sc in Computers</div>
+                    <div class="edu-school">Gayatri Vidya Parishad, Visakhapatnam</div>
+                    <div class="edu-meta">Jul 2018 – Aug 2021 &nbsp;·&nbsp; CGPA <strong>8.03</strong></div>
+                </div>
+                <div class="edu-cell">
+                    <div class="edu-degree">Intermediate (MPC)</div>
+                    <div class="edu-school">Swarna Bharathi Junior College, Icchapuram</div>
+                    <div class="edu-meta">Jun 2016 – Apr 2018 &nbsp;·&nbsp; <strong>926 / 1000</strong></div>
+                </div>
+                <div class="edu-cell">
+                    <div class="edu-degree">SSC</div>
+                    <div class="edu-school">Govt. Boys High School, Icchapuram</div>
+                    <div class="edu-meta">2015 – 2016 &nbsp;·&nbsp; CGPA <strong>9.0</strong></div>
+                </div>
+            </div>
+
+            <!-- ── Technical Skills ── -->
+            <div class="skills-block">
+                <!-- To add a new skill: copy a <span class="skill-chip"> and add text -->
+                <div class="skill-category">
+                    <div class="skill-cat-label">Databases &amp; SQL</div>
+                    <div class="skill-chips">
+                        <span class="skill-chip">MySQL</span>
+                        <span class="skill-chip">MariaDB</span>
+                        <span class="skill-chip">Query Optimization</span>
+                        <span class="skill-chip">Stored Procedures</span>
+                        <span class="skill-chip">Joins &amp; Views</span>
+                        <span class="skill-chip">Indexing</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <div class="skill-cat-label">Backend &amp; Programming</div>
+                    <div class="skill-chips">
+                        <span class="skill-chip">Python</span>
+                        <span class="skill-chip">Flask</span>
+                        <span class="skill-chip">REST APIs</span>
+                        <span class="skill-chip">Java</span>
+                        <span class="skill-chip">C</span>
+                        <span class="skill-chip">Streamlit</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <div class="skill-cat-label">Tools &amp; Workflow</div>
+                    <div class="skill-chips">
+                        <span class="skill-chip">Postman</span>
+                        <span class="skill-chip">Git</span>
+                        <span class="skill-chip">GitHub</span>
+                        <span class="skill-chip">JIRA</span>
+                        <span class="skill-chip">FTP</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <div class="skill-cat-label">ML &amp; Data</div>
+                    <div class="skill-chips">
+                        <span class="skill-chip">Pandas</span>
+                        <span class="skill-chip">NumPy</span>
+                        <span class="skill-chip">Scikit-learn</span>
+                        <span class="skill-chip">XGBoost</span>
+                        <span class="skill-chip">SVM</span>
+                        <!-- "learning" class adds italic muted style -->
+                        <span class="skill-chip">Power BI <em style="font-size:0.7rem; color:var(--muted)">(learning)</em></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── Certifications ── -->
+            <div style="margin-top:3rem">
+                <div class="section-overline">Verified</div>
+                <h3 class="serif" style="font-size:1.3rem; color:var(--indigo); margin-bottom:0.5rem">Certifications</h3>
+                <div style="width:28px;height:2px;background:var(--gold)"></div>
+            </div>
+
+            <!-- To add a new cert: copy a .cert-card block and update name, issuer, href -->
+            <div class="cert-grid">
+                <div class="cert-card">
+                    <div class="cert-name">Python Programming</div>
+                    <div class="cert-issuer">HackerRank &amp; Coding Ninjas</div>
+                    <a href="https://www.hackerrank.com/certificates/iframe/fb5b1f48803a" target="_blank" class="cert-link">
+                        <i class="fas fa-external-link-alt"></i> View Certificate
+                    </a>
+                </div>
+                <!-- <div class="cert-card">
+                    <div class="cert-name">Problem Solving — Basic</div>
+                    <div class="cert-issuer">HackerRank · CodeChef Silver Badge</div>
+                    <a href="https://www.hackerrank.com/certificates/770d03b5f48f" target="_blank" class="cert-link">
+                        <i class="fas fa-external-link-alt"></i> View Certificate
+                    </a>
+                </div> -->
+                <div class="cert-card">
+                    <div class="cert-name">SQL Certification</div>
+                    <div class="cert-issuer">HackerRank — Queries, Joins &amp; Data Manipulation</div>
+                    <!-- Two certificates for SQL — both linked separately -->
+                    <div class="cert-links">
+                        <a href="https://www.hackerrank.com/certificates/iframe/c26e89b20ce5" target="_blank" class="cert-link">
+                            <i class="fas fa-external-link-alt"></i> Certificate 1
+                        </a>
+                        <a href="https://www.hackerrank.com/certificates/iframe/ba9a3e0976f3" target="_blank" class="cert-link">
+                            <i class="fas fa-external-link-alt"></i> Certificate 2
+                        </a>
+                    </div>
+                </div>
+                <div class="cert-card">
+                    <div class="cert-name">Java Basic Certification</div>
+                    <div class="cert-issuer">HackerRank — Java Programming Fundamentals</div>
+                    <a href="https://www.hackerrank.com/certificates/iframe/c422db58c14d" target="_blank" class="cert-link">
+                        <i class="fas fa-external-link-alt"></i> View Certificate
+                    </a>
+                </div>
+                <!-- .full spans both columns -->
+                <!-- <div class="cert-card full">
+                    <div class="cert-name">Accenture Developer Virtual Experience Programme</div>
+                    <div class="cert-issuer">Simulated professional development environment — practical skills in a real-world project context</div>
+                </div> -->
+            </div>
+
+            <div class="text-center mt-10">
+                <button class="back-btn nav-btn" data-target="home">
+                    <i class="fas fa-arrow-left"></i> Back
+                </button>
+            </div>
         </div>
+    </section>
 
-        <div class="contact-grid">
-            <a href="mailto:sahukarichandan2001@gmail.com" class="contact-cell">
-                <div class="contact-cell-icon"><i class="fas fa-envelope"></i></div>
-                <div>
-                    <div class="contact-cell-label">Email</div>
-                    <div class="contact-cell-value">sahukarichandan2001@gmail.com</div>
+
+    <!-- ══════════════════════════════════════════════════════════════════
+         👤 ABOUT SECTION
+         Summary, Interests, Languages, Contact & Links
+    ══════════════════════════════════════════════════════════════════ -->
+    <section id="about" class="page-section">
+        <div class="section-wrap">
+
+            <div class="section-overline">The Person</div>
+            <h2 class="section-title">About Me</h2>
+            <div class="section-rule"></div>
+
+            <!-- Short personal summary paragraph -->
+            <p style="font-size:0.95rem; color:var(--muted); max-width:560px; line-height:1.8; font-weight:300">
+                SQL Developer with hands-on production experience in enterprise HRMS and LMS systems.
+                I care about clean data logic, fast queries, and software that actually works reliably at scale.
+                Alongside SQL work, I've built ML-powered Flask applications and I'm currently learning Power BI
+                to round out my data skill set.
+            </p>
+
+            <!-- Interests + Languages side by side (stacks on mobile) -->
+            <div class="about-grid">
+                <div class="about-block">
+                    <div class="about-block-label">Interests &amp; Hobbies</div>
+                    <div style="display:flex; flex-direction:column;">
+                        <!-- To add interests: copy an .interest-item span -->
+                        <span class="interest-item">Reading novels &amp; non-fiction</span>
+                        <span class="interest-item">Tech &amp; productivity podcasts</span>
+                        <span class="interest-item">Playing sports</span>
+                        <span class="interest-item">Exploring new places</span>
+                    </div>
                 </div>
-            </a>
-            <a href="tel:+918309443303" class="contact-cell">
-                <div class="contact-cell-icon"><i class="fas fa-phone-alt"></i></div>
-                <div>
-                    <div class="contact-cell-label">Phone</div>
-                    <div class="contact-cell-value">+91 83094 43303</div>
+                <div class="about-block">
+                    <div class="about-block-label">Languages</div>
+                    <div>
+                        <!-- To add a language: copy a .lang-badge span -->
+                        <span class="lang-badge">English</span>
+                        <span class="lang-badge">Telugu</span>
+                        <span class="lang-badge">Hindi</span>
+                        <span class="lang-badge">Oriya</span>
+                    </div>
+                    <div style="margin-top:1.2rem">
+                        <div class="about-block-label">Based in</div>
+                        <span style="font-size:0.85rem; color:var(--ink)">Chennai, Tamil Nadu, India</span>
+                    </div>
                 </div>
-            </a>
-            <a href="https://linkedin.com/in/chandanchowdary" target="_blank" class="contact-cell">
-                <div class="contact-cell-icon"><i class="fab fa-linkedin"></i></div>
-                <div>
-                    <div class="contact-cell-label">LinkedIn</div>
-                    <div class="contact-cell-value">/in/chandanchowdary</div>
-                </div>
-            </a>
-            <a href="https://github.com/chandan-2025" target="_blank" class="contact-cell">
-                <div class="contact-cell-icon"><i class="fab fa-github"></i></div>
-                <div>
-                    <div class="contact-cell-label">GitHub</div>
-                    <div class="contact-cell-value">github.com/chandan-2025</div>
-                </div>
-            </a>
-            <a href="https://chandan-2025.github.io/portfolio" target="_blank" class="contact-cell" style="grid-column:1/-1">
-                <div class="contact-cell-icon"><i class="fas fa-globe"></i></div>
-                <div>
-                    <div class="contact-cell-label">Live Portfolio</div>
-                    <div class="contact-cell-value">chandan-2025.github.io/portfolio</div>
-                </div>
-            </a>
+            </div>
+
+            <!-- ── Contact & Links ── -->
+            <div style="margin-top:2.5rem">
+                <div class="section-overline">Get in Touch</div>
+                <h3 class="serif" style="font-size:1.3rem; color:var(--indigo)">Contact &amp; Links</h3>
+            </div>
+
+            <!-- Each .contact-cell is a full clickable anchor — update hrefs as needed -->
+            <div class="contact-grid">
+                <a href="mailto:sahukarichandan2001@gmail.com" class="contact-cell">
+                    <div class="contact-cell-icon"><i class="fas fa-envelope"></i></div>
+                    <div>
+                        <div class="contact-cell-label">Email</div>
+                        <div class="contact-cell-value">sahukarichandan2001@gmail.com</div>
+                    </div>
+                </a>
+                <a href="tel:+918309443303" class="contact-cell">
+                    <div class="contact-cell-icon"><i class="fas fa-phone-alt"></i></div>
+                    <div>
+                        <div class="contact-cell-label">Phone</div>
+                        <div class="contact-cell-value">+91 83094 43303</div>
+                    </div>
+                </a>
+                <a href="https://linkedin.com/in/chandanchowdary" target="_blank" class="contact-cell">
+                    <div class="contact-cell-icon"><i class="fab fa-linkedin"></i></div>
+                    <div>
+                        <div class="contact-cell-label">LinkedIn</div>
+                        <div class="contact-cell-value">/in/chandanchowdary</div>
+                    </div>
+                </a>
+                <a href="https://github.com/chandan-2025" target="_blank" class="contact-cell">
+                    <div class="contact-cell-icon"><i class="fab fa-github"></i></div>
+                    <div>
+                        <div class="contact-cell-label">GitHub</div>
+                        <div class="contact-cell-value">github.com/chandan-2025</div>
+                    </div>
+                </a>
+                <!-- Portfolio link spans full width (grid-column: 1 / -1 via inline style) -->
+                <a href="https://chandan-2025.github.io/portfolio" target="_blank" class="contact-cell" style="grid-column:1/-1">
+                    <div class="contact-cell-icon"><i class="fas fa-globe"></i></div>
+                    <div>
+                        <div class="contact-cell-label">Live Portfolio</div>
+                        <div class="contact-cell-value">chandan-2025.github.io/portfolio</div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="text-center mt-10">
+                <button class="back-btn nav-btn" data-target="home">
+                    <i class="fas fa-arrow-left"></i> Back
+                </button>
+            </div>
         </div>
+    </section>
 
-        <div class="text-center mt-10">
-            <button class="back-btn nav-btn" data-target="home"><i class="fas fa-arrow-left"></i> Back</button>
-        </div>
-    </div>
-</section>
 
-</div><!-- end page-wrap -->
+</div><!-- end .page-wrap -->
 
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     ⚙️  JAVASCRIPT
+     Handles:
+       1. Scroll-to-top button visibility
+       2. Section switching (setActive function)
+       3. Mobile hamburger menu toggle
+     ══════════════════════════════════════════════════════════════════ -->
 <script>
-    var allNavBtns = document.querySelectorAll('.nav-btn[data-target]');
-    var allSections = document.querySelectorAll('.page-section');
-    var menuToggle = document.getElementById('menu-toggle');
-    var mobileMenu = document.getElementById('mobile-menu');
-    var scrollTopBtn = document.getElementById('scroll-top');
+    // ── DOM references ──────────────────────────────────────────────────
+    // All buttons that have a data-target attribute (nav + back + CTA buttons)
+    var allNavBtns   = document.querySelectorAll('.nav-btn[data-target]');
+    var allSections  = document.querySelectorAll('.page-section');
+    var menuToggle   = document.getElementById('menu-toggle');   // hamburger button
+    var mobileMenu   = document.getElementById('mobile-menu');   // dropdown nav
+    var scrollTopBtn = document.getElementById('scroll-top');    // ↑ button
 
+    // ── Scroll-to-top button ────────────────────────────────────────────
+    // Show the button only after user scrolls down 400px
     window.addEventListener('scroll', function() {
         scrollTopBtn.style.display = window.scrollY > 400 ? 'block' : 'none';
     });
 
+    // ── setActive(targetId) ─────────────────────────────────────────────
+    // 1. Hides all sections by removing .active
+    // 2. Shows the target section by adding .active
+    // 3. Updates .active class on all nav buttons to highlight current page
+    // 4. Scrolls to top of page smoothly
+    // 5. Closes mobile menu if it's open
     function setActive(targetId) {
-        allSections.forEach(function(s) { s.classList.remove('active'); });
+        // Hide all sections
+        allSections.forEach(function(s) {
+            s.classList.remove('active');
+        });
+
+        // Show the target section
         var target = document.getElementById(targetId);
         if (target) { target.classList.add('active'); }
 
+        // Update active state on ALL nav buttons (desktop + mobile + back btns)
         allNavBtns.forEach(function(btn) {
             btn.classList.remove('active');
             if (btn.getAttribute('data-target') === targetId) {
@@ -1107,26 +1443,35 @@
             }
         });
 
+        // Scroll back to top when switching sections
         window.scrollTo({ top: 0, behavior: 'smooth' });
 
+        // Close mobile dropdown if it was open
         if (mobileMenu.classList.contains('open')) {
             mobileMenu.classList.remove('open');
         }
     }
 
+    // ── Attach click listener to every nav button ───────────────────────
+    // Covers: desktop nav, mobile nav, "Back" buttons, and home CTA buttons
     allNavBtns.forEach(function(btn) {
         btn.addEventListener('click', function() {
             setActive(btn.getAttribute('data-target'));
         });
     });
 
+    // ── Mobile hamburger toggle ─────────────────────────────────────────
+    // Clicking the ☰ icon toggles the .open class on #mobile-menu
     menuToggle.addEventListener('click', function() {
         mobileMenu.classList.toggle('open');
     });
 
+    // ── Initial load ────────────────────────────────────────────────────
+    // Set home as the active section when the page first loads
     document.addEventListener('DOMContentLoaded', function() {
         setActive('home');
     });
 </script>
+
 </body>
 </html>
